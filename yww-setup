@@ -1,0 +1,523 @@
+#! /usr/bin/env bash
+trap 'printf "\n" ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR
+set -euo pipefail
+set -x
+
+# parses place, latitude and longitude options from json format into something more human readable
+function lat_lon_parser (){
+
+    
+    awk '
+    
+        BEGIN{
+
+            RS="[]\"],\""
+    
+            ORS="\n"
+    
+            FS="\":\""
+    
+            OFS=" "
+    
+        }
+
+        /lat":/{f=1}
+
+
+        f==1{
+
+            $1=$1
+
+            printf("%s ", $2)
+    
+        }
+
+        /display_name/{
+
+
+            f=0    
+  
+            print ""
+
+        }
+    
+    '
+}
+
+# extracts relevant values from the call to the weather api, and presents them into a bash array friedly format.
+function weather_data_parser () {
+    
+    awk '   
+    
+        BEGIN{
+
+            RS="({\")|(,\")"
+    
+            ORS="\n"
+    
+            FS="(\":)|(\":\\[\")|(\")"
+
+        }   
+
+        /temperature/{awk_temperature=$2}
+        /windspeed/ {awk_windspeed=$2}
+        /winddirection/{awk_winddirection=$2}
+        /weathercode/{awk_weathercode=$2}
+        /sunset/{awk_sunset=$2}
+        /sunrise/{awk_sunrise=$2}
+        
+        END{
+    
+        printf("%s %s %s %s %s %s", awk_temperature , awk_windspeed, awk_winddirection, awk_weathercode , awk_sunset, awk_sunrise)    
+    
+        }
+    
+
+        '
+}
+
+# translates the weather's api code numbers into text, and determines icons to be used 
+function weather_icon_descriptor () {
+
+    local epoch_time="$(date "+%s")" 
+
+    if [[ "${epoch_time}" -ge "$(date -d "${weather_data[5]}" "+%s")" &&  "${epoch_time}" -le "$(date -d "${weather_data[4]}" +%s)" ]] ; then  
+
+
+    # Daytime icons and short weather descriptions
+
+        case "${weather_data[3]}" in
+
+        0)
+            wicon="clear-day.svg"
+            wtext="Clear sky"
+            ;;
+
+        1)
+            wicon="clear-day.svg"
+            wtext="Mainly clear"
+            ;;
+  
+        2)
+            wicon="cloudy-1-day.svg"
+            wtext="Partly cloudy"
+            ;;
+
+        3)
+            wicon="cloudy.svg"
+            wtext="Overcast"
+            ;;
+
+        45)
+            wicon="fog.svg"
+            wtext="Fog"
+            ;;
+
+        48)
+            wicon="fog.svg"
+            wtext="Rime fog"
+            ;;
+
+        51)
+            wicon="rainy-1.svg"
+            wtext="Light drizzle"
+            ;;
+  
+        53)
+            wicon="rainy-1.svg"
+            wtext="Moderate drizzle"
+            ;;
+
+        55)
+            wicon="rainy-1.svg"
+            wtext="Intense drizzle"
+            ;;
+    
+        56)
+            wicon="rain-and-sleet.svg"
+            wtext="Light freezing drizzle"
+            ;;
+
+        57)
+            wicon="rain-and-sleet.svg"
+            wtext="Intense freezing drizzle"
+            ;;
+    
+        61)
+            wicon="rainy-1-day.svg"
+            wtext="Slight rain"
+            ;;
+    
+        63)
+            wicon="rainy-2-day.svg"
+            wtext="Moderate rain"
+            ;;
+    
+        65)
+            wicon="rainy-3-day.svg"
+            wtext="Intense rain"
+            ;;
+    
+        66)
+            wicon="rain-and-sleet.svg"
+            wtext="Light freezing rain"
+            ;;
+
+        67)
+            wicon="rain-and-sleet.svg"
+            wtext="Intense freezing rain"
+            ;;
+    
+        71)
+            wicon="snowy-1-day.svg"
+            wtext="Slight snow fall"
+            ;;
+
+        73)
+            wicon="snowy-2-day.svg"
+            wtext="Moderate snow fall"
+            ;;
+    
+        75)
+            wicon="snowy-3-day.svg"
+            wtext="Intense snow fall"
+            ;;
+
+        77)
+            wicon="snow-and-sleet.svg"
+            wtext="Snow grains"
+            ;;
+
+        80)
+            wicon="rainy-1.svg"
+            wtext="Slight rain showers"
+            ;;
+    
+        81)
+            wicon="rainy-2.svg"
+            wtext="Moderate rain showers"
+            ;;
+
+        82)
+            wicon="rainy-3.svg"
+            wtext="Intense rain showers"
+            ;;
+
+        85)
+            wicon="snowy-1.svg"
+            wtext="Slight snow showers"
+            ;;
+
+        86)
+            wicon="snowy-3.svg"
+            wtext="Heavy snow showers"
+            ;;
+
+        95)
+            wicon="scattered-thunderstorms.svg"
+            wtext="Thunderstorm"
+            ;;
+    
+        96)
+            wicon="thunderstorms.svg"
+            wtext="Thunderstorm with slight hail"
+            ;;
+
+        99)
+            wicon="thunderstorms.svg"
+            wtext="Thunderstorm with heavy hail"
+            ;;
+
+
+        *)
+            wicon="digalog-no.svg"
+            wtext="unknown"
+            ;;
+    
+        esac
+# Night Time Icons    
+    else
+        
+        case "${weather_data[3]}" in
+
+        0)
+            wicon="clear-night.svg"
+            wtext="Clear sky"
+            ;;
+
+        1)
+            wicon="clear-night.svg"
+            wtext="Mainly clear"
+            ;;
+  
+        2)
+            wicon="cloudy-2-night.svg"
+            wtext="Partly cloudy"
+            ;;
+
+        3)
+            wicon="cloudy.svg"
+            wtext="Overcast"
+            ;;
+
+        45)
+            wicon="fog.svg"
+            wtext="Fog"
+            ;;
+
+        48)
+            wicon="frost-night.svg"
+            wtext="Rime fog"
+            ;;
+
+        51)
+            wicon="rainy-1-night.svg"
+            wtext="Light drizzle"
+            ;;
+  
+        53)
+            wicon="rainy-1-night.svg"
+            wtext="Moderate drizzle"
+            ;;
+
+        55)
+            wicon="rainy-1-night.svg"
+            wtext="Intense drizzle"
+            ;;
+    
+        56)
+            wicon="rain-and-sleet.svg"
+            wtext="Light freezing drizzle"
+            ;;
+
+        57)
+            wicon="rain-and-sleet.svg"
+            wtext="Intense freezing drizzle"
+            ;;
+    
+        61)
+            wicon="rainy-1-night.svg"
+            wtext="Slight rain"
+            ;;
+    
+        63)
+            wicon="rainy-2-night.svg"
+            wtext="Moderate rain"
+            ;;
+    
+        65)
+            wicon="rainy-3-night.svg"
+            wtext="Intense rain"
+            ;;
+    
+        66)
+            wicon="rain-and-sleet.svg"
+            wtext="Light freezing rain"
+            ;;
+
+        67)
+            wicon="rain-and-sleet.svg"
+            wtext="Intense freezing rain"
+            ;;
+    
+        71)
+            wicon="snowy-1-night.svg"
+            wtext="Slight snow fall"
+            ;;
+
+        73)
+            wicon="snowy-2-night.svg"
+            wtext="Moderate snow fall"
+            ;;
+    
+        75)
+            wicon="snowy-3-night.svg"
+            wtext="Intense snow fall"
+            ;;
+
+        77)
+            wicon="snow-and-sleet.svg"
+            wtext="Snow grains"
+            ;;
+
+        80)
+            wicon="rainy-1-night.svg"
+            wtext="Slight rain showers"
+            ;;
+    
+        81)
+            wicon="rainy-2-night.svg"
+            wtext="Moderate rain showers"
+            ;;
+
+        82)
+            wicon="rainy-3-night.svg"
+            wtext="Intense rain showers"
+            ;;
+
+        85)
+            wicon="snowy-1-night.svg"
+            wtext="Slight snow showers"
+            ;;
+
+        86)
+            wicon="snowy-3-night.svg"
+            wtext="Heavy snow showers"
+            ;;
+
+        95)
+            wicon="scattered-thunderstorms-night.svg"
+            wtext="Thunderstorm"
+            ;;
+    
+        96)
+            wicon="hail.svg"
+            wtext="Thunderstorm with slight hail"
+            ;;
+
+        99)
+            wicon="hail.svg"
+            wtext="Thunderstorm with heavy hail"
+            ;;
+
+
+        *)
+            wicon="dialog-no.svg"
+            wtext="unknown"
+            ;;
+    
+        esac       
+
+fi
+
+}
+
+function set_wind_suffix (){
+
+         case "${windspeed_unit}" in
+         
+         kmh)
+            wind_speed_suffix="km/h"
+            ;;
+
+         ms)
+            wind_speed_suffix="m/s"
+            ;;
+        
+         mph)
+            wind_speed_suffix="mph"
+            ;;
+        
+         kn)
+            wind_speed_suffix="knots"
+            ;;
+
+         *)
+            wind_speed_suffix="no available"
+            ;;
+    
+        esac   
+    
+}
+
+function set_temperature_suffix (){
+
+        case "${temp_unit}" in
+        celsius)
+            temperature_suffix="°C"
+            ;;
+        
+        fahrenheit) 
+            temperature_suffix="°F"
+            ;;
+        *)
+            temperature_suffix="unknown"
+            ;;
+    
+        esac
+    
+}
+# VARIABLES 
+location=''                   # Town, Country OR State      needed by https://geocode.maps.co
+declare -a weather_data       # array to store data variables requested to open-meteo
+declare -a location_and_units # array to store location and weather preferred units
+declare -a request_lat_lon    # array to store the latitude and longitude pair for the location
+latitude=''                   #                             needed by https://api.open-meteo.com/v1/forecast
+longitude=''                  #                             needed by https://api.open-meteo.com/v1/forecast
+current_weather='true'        #                             needed by https://api.open-meteo.com/v1/forecast
+temp_unit=''                  #                             needed by https://api.open-meteo.com/v1/forecast
+windspeed_unit=''             # kmh, ms, mph, kn            needed by https://api.open-meteo.com/v1/forecast
+timeformat='iso8601'          #                             needed by https://api.open-meteo.com/v1/forecast
+timezone="$(date "+%Z")"      #                             needed by https://api.open-meteo.com/v1/forecast
+wicon=''                      # weather icon name
+wtext=''                      # current weather text description as privided by open-meteo.com
+icons_dir="/opt/yww-icons"    # weather icons location
+#epoch_time                   # used in function weather_icon_descriptor, a local variable
+temperature_suffix=''         # suffix F or C to be written in the tooltip
+wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
+
+if [[ ! -d "${icons_dir}" ]] ; then
+
+    mkdir "${icons_dir}"
+    
+fi
+
+oldifs="${IFS}"
+
+IFS=$'|'
+
+location_and_units=($(yad --form --field='Location:CE' --field='Temperature Unit:CB' --field='Wind Speed Unit:CB' '' '^celsius!fahrenheit' '^kmh!ms!mph!kn'))
+
+location="${location_and_units[0]}"
+
+temp_unit="${location_and_units[1]}"
+
+windspeed_unit="${location_and_units[2]}"
+
+IFS="${oldifs}"
+
+set_temperature_suffix
+
+set_wind_suffix
+
+
+# REQUEST lat log of a place to https://geocode.maps.co
+
+request_lat_lon=($(curl -s "https://geocode.maps.co/search?q=${location}" | \
+    lat_lon_parser - | \
+    yad --list --column=Locations:TEXT))
+
+latitude="${request_lat_lon[0]}"
+longitude="${request_lat_lon[1]}"
+
+# LOOP to refresh data?
+#exec 3<> "/tmp/yww.fifo"
+
+
+
+# REQUEST current weather to https://api.open-meteo.com/v1/forecast
+#       and assign it to an array, element 1 Temperature, element 2 Wind Speed, element 3 Wind Direction, element 4 Weather Code, element 5 sunset, element 6 sunrise
+weather_data=($(curl -s "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
+
+weather_icon_descriptor
+
+yad --notification --listen --text="$(printf 'Place: %s\n%s\nTemperature: %s %s\nWind Speed: %s %s\nWind Direction: %s °' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]}")" --image "${icons_dir}/${wicon}" --icon-size 46 #<&3 &
+
+while true ; do
+
+
+    sleep 33m
+    
+    weather_data=($(curl -s "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
+
+    weather_icon_descriptor
+    
+    echo "icon:${icons_dir}/${wicon}" > "/tmp/yww.fifo"
+    
+    echo "tooltip:Place: ${location}\n${wtext}\nTemperature: ${weather_data[0]}\nWind Speed: ${weather_data[1]}\nWind Direction: ${weather_data[2]}" >> "/tmp/yww.fifo"
+    
+
+
+done
+
+exit 0
