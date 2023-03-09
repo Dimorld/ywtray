@@ -4,7 +4,7 @@
 #l10n nilsonmorales
 export TEXTDOMAIN=yww-setup
 export OUTPUT_CHARSET=UTF-8
-trap 'printf "\n" ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR
+trap 'rm $named_pipe; printf "\n" ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT
 set -euo pipefail
 set -x
 
@@ -458,14 +458,11 @@ wicon=''                      # weather icon indicator name
 wtext=''                      # current weather text description as privided by open-meteo.com
 icons_dir="/opt/yww-icons"    # weather icons location
 #epoch_time                   # used in function weather_icon_descriptor, a local variable declared
-temperature_suffix=''         #  suffix F or C to be written in the tooltip
-wind_speed_suffix=''          #  suffix mph, kn to be written in the tooltip
+temperature_suffix=''         # suffix F or C to be written in the tooltip
+wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
 
-if [[ ! -d "${icons_dir}" ]] ; then
+named_pipe="$(mktemp -u "/tmp/XXXXXXXXXXXXX")"
 
-    mkdir "${icons_dir}"
-    
-fi
 
 oldifs="${IFS}"
 
@@ -495,8 +492,8 @@ request_lat_lon=($(curl -k "https://geocode.maps.co/search?q=${location}" | \
 latitude="${request_lat_lon[0]}"
 longitude="${request_lat_lon[1]}"
 
-# LOOP to refresh data?
-#exec 3<> "/tmp/yww.fifo"
+mkfifo "${named_pipe}"
+exec 3<> "${named_pipe}"
 
 
 
@@ -506,21 +503,21 @@ weather_data=($(curl -k "https://api.open-meteo.com/v1/forecast?latitude=${latit
 
 weather_icon_descriptor
 
-yad --notification --listen --text="$(printf ''$(gettext 'Place:')' %s\n%s'$(gettext '\nTemperature:')' %s %s'$(gettext '\nWind')' '$(gettext 'Speed:')' %s %s'$(gettext '\nWind')' '$(gettext 'Direction:')' %s' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]}")" --image "${icons_dir}/${wicon}" --icon-size 46 #<&3 &
+yad --notification --listen --text="$(printf ''$(gettext 'Place:')' %s\n%s'$(gettext '\nTemperature:')' %s %s'$(gettext '\nWind')' '$(gettext 'Speed:')' %s %s'$(gettext '\nWind')' '$(gettext 'Direction:')' %s' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]} °")" --image "${icons_dir}/${wicon}" --icon-size 46 <&3 &
 
 
 while true ; do
 
 
-    sleep 45m
+    sleep 33m
     
     weather_data=($(curl -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 
     weather_icon_descriptor
     
-    echo "icon:${icons_dir}/${wicon}" > "/tmp/yww.fifo"
+    echo "icon:${icons_dir}/${wicon}" > "${named_pipe}"
     
-    echo "tooltip:Place: ${location}\n${wtext}\nTemperature: ${weather_data[0]}\nWind Speed: ${weather_data[1]}\nWind Direction: ${weather_data[2]}" >> "/tmp/yww.fifo"
+    echo "tooltip:Place: ${location}\n${wtext}\nTemperature: ${weather_data[0]} ${temperature_suffix}\nWind Speed: ${weather_data[1]} ${wind_speed_suffix}\nWind Direction: ${weather_data[2]} °" >> "${named_pipe}"
     
 
 
