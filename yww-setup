@@ -1,4 +1,9 @@
 #! /usr/bin/env bash
+#By Tenoch 
+#i18n nilsonmorales
+#l10n nilsonmorales
+export TEXTDOMAIN=yww-setup
+export OUTPUT_CHARSET=UTF-8
 trap 'printf "\n" ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR
 set -euo pipefail
 set -x
@@ -76,7 +81,7 @@ function weather_data_parser () {
         '
 }
 
-# translates the weather's api code numbers into text, and determines icons to be used 
+# translates the weather api's code numbers to text, and determines icons to use 
 function weather_icon_descriptor () {
 
     local epoch_time="$(date "+%s")" 
@@ -90,148 +95,148 @@ function weather_icon_descriptor () {
 
         0)
             wicon="clear-day.svg"
-            wtext="Clear sky"
+            wtext="$(gettext 'Clear sky')"
             ;;
 
         1)
             wicon="clear-day.svg"
-            wtext="Mainly clear"
+            wtext="$(gettext 'Mainly clear')"
             ;;
   
         2)
             wicon="cloudy-1-day.svg"
-            wtext="Partly cloudy"
+            wtext="$(gettext 'Partly cloudy')"
             ;;
 
         3)
             wicon="cloudy.svg"
-            wtext="Overcast"
+            wtext="$(gettext 'Overcast')"
             ;;
 
         45)
             wicon="fog.svg"
-            wtext="Fog"
+            wtext="$(gettext 'Fog')"
             ;;
 
         48)
             wicon="fog.svg"
-            wtext="Rime fog"
+            wtext="$(gettext 'Rime fog')"
             ;;
 
         51)
             wicon="rainy-1.svg"
-            wtext="Light drizzle"
+            wtext="$(gettext 'Light drizzle')"
             ;;
   
         53)
             wicon="rainy-1.svg"
-            wtext="Moderate drizzle"
+            wtext="$(gettext 'Moderate drizzle')"
             ;;
 
         55)
             wicon="rainy-1.svg"
-            wtext="Intense drizzle"
+            wtext="$(gettext 'Intense drizzle')"
             ;;
     
         56)
             wicon="rain-and-sleet.svg"
-            wtext="Light freezing drizzle"
+            wtext="$(gettext 'Light freezing drizzle')"
             ;;
 
         57)
             wicon="rain-and-sleet.svg"
-            wtext="Intense freezing drizzle"
+            wtext="$(gettext 'Intense freezing drizzle')"
             ;;
     
         61)
             wicon="rainy-1-day.svg"
-            wtext="Slight rain"
+            wtext="$(gettext 'Slight rain')"
             ;;
     
         63)
             wicon="rainy-2-day.svg"
-            wtext="Moderate rain"
+            wtext="$(gettext 'Moderate rain')"
             ;;
     
         65)
             wicon="rainy-3-day.svg"
-            wtext="Intense rain"
+            wtext="$(gettext 'Intense rain')"
             ;;
     
         66)
             wicon="rain-and-sleet.svg"
-            wtext="Light freezing rain"
+            wtext="$(gettext 'Light freezing rain')"
             ;;
 
         67)
             wicon="rain-and-sleet.svg"
-            wtext="Intense freezing rain"
+            wtext="$(gettext 'Intense freezing rain')"
             ;;
     
         71)
             wicon="snowy-1-day.svg"
-            wtext="Slight snow fall"
+            wtext="$(gettext 'Slight snow fall')"
             ;;
 
         73)
             wicon="snowy-2-day.svg"
-            wtext="Moderate snow fall"
+            wtext="$(gettext 'Moderate snow fall')"
             ;;
     
         75)
             wicon="snowy-3-day.svg"
-            wtext="Intense snow fall"
+            wtext="$(gettext 'Intense snow fall')"
             ;;
 
         77)
             wicon="snow-and-sleet.svg"
-            wtext="Snow grains"
+            wtext="$(gettext 'Snow grains')"
             ;;
 
         80)
             wicon="rainy-1.svg"
-            wtext="Slight rain showers"
+            wtext="$(gettext 'Slight rain showers')"
             ;;
     
         81)
             wicon="rainy-2.svg"
-            wtext="Moderate rain showers"
+            wtext="$(gettext 'Moderate rain showers')"
             ;;
 
         82)
             wicon="rainy-3.svg"
-            wtext="Intense rain showers"
+            wtext="$(gettext 'Intense rain showers')"
             ;;
 
         85)
             wicon="snowy-1.svg"
-            wtext="Slight snow showers"
+            wtext="$(gettext 'Slight snow showers')"
             ;;
 
         86)
             wicon="snowy-3.svg"
-            wtext="Heavy snow showers"
+            wtext="$(gettext 'Heavy snow showers')"
             ;;
 
         95)
             wicon="scattered-thunderstorms.svg"
-            wtext="Thunderstorm"
+            wtext="$(gettext 'Thunderstorm')"
             ;;
     
         96)
             wicon="thunderstorms.svg"
-            wtext="Thunderstorm with slight hail"
+            wtext="$(gettext 'Thunderstorm with slight hail')"
             ;;
 
         99)
             wicon="thunderstorms.svg"
-            wtext="Thunderstorm with heavy hail"
+            wtext="$(gettext 'Thunderstorm with heavy hail')"
             ;;
 
 
         *)
-            wicon="digalog-no.svg"
-            wtext="unknown"
+            wicon="tornado.svg"
+            wtext="$(gettext 'unknown')"
             ;;
     
         esac
@@ -242,148 +247,148 @@ function weather_icon_descriptor () {
 
         0)
             wicon="clear-night.svg"
-            wtext="Clear sky"
+            wtext="$(gettext 'Clear sky')"
             ;;
 
         1)
             wicon="clear-night.svg"
-            wtext="Mainly clear"
+            wtext="$(gettext 'Mainly clear')"
             ;;
   
         2)
             wicon="cloudy-2-night.svg"
-            wtext="Partly cloudy"
+            wtext="$(gettext 'Partly cloudy')"
             ;;
 
         3)
             wicon="cloudy.svg"
-            wtext="Overcast"
+            wtext="$(gettext 'Overcast')"
             ;;
 
         45)
             wicon="fog.svg"
-            wtext="Fog"
+            wtext="$(gettext 'Fog')"
             ;;
 
         48)
             wicon="frost-night.svg"
-            wtext="Rime fog"
+            wtext="$(gettext 'Rime fog')"
             ;;
 
         51)
             wicon="rainy-1-night.svg"
-            wtext="Light drizzle"
+            wtext="$(gettext 'Light drizzle')"
             ;;
   
         53)
             wicon="rainy-1-night.svg"
-            wtext="Moderate drizzle"
+            wtext="$(gettext 'Moderate drizzle')"
             ;;
 
         55)
             wicon="rainy-1-night.svg"
-            wtext="Intense drizzle"
+            wtext="$(gettext 'Intense drizzle')"
             ;;
     
         56)
             wicon="rain-and-sleet.svg"
-            wtext="Light freezing drizzle"
+            wtext="$(gettext 'Light freezing drizzle')"
             ;;
 
         57)
             wicon="rain-and-sleet.svg"
-            wtext="Intense freezing drizzle"
+            wtext="$(gettext 'Intense freezing drizzle')"
             ;;
     
         61)
             wicon="rainy-1-night.svg"
-            wtext="Slight rain"
+            wtext="$(gettext 'Slight rain')"
             ;;
     
         63)
             wicon="rainy-2-night.svg"
-            wtext="Moderate rain"
+            wtext="$(gettext 'Moderate rain')"
             ;;
     
         65)
             wicon="rainy-3-night.svg"
-            wtext="Intense rain"
+            wtext="$(gettext 'Intense rain')"
             ;;
     
         66)
             wicon="rain-and-sleet.svg"
-            wtext="Light freezing rain"
+            wtext="$(gettext 'Light freezing rain')"
             ;;
 
         67)
             wicon="rain-and-sleet.svg"
-            wtext="Intense freezing rain"
+            wtext="$(gettext 'Intense freezing rain')"
             ;;
     
         71)
             wicon="snowy-1-night.svg"
-            wtext="Slight snow fall"
+            wtext="$(gettext 'Slight snow fall')"
             ;;
 
         73)
             wicon="snowy-2-night.svg"
-            wtext="Moderate snow fall"
+            wtext="$(gettext 'Moderate snow fall')"
             ;;
     
         75)
             wicon="snowy-3-night.svg"
-            wtext="Intense snow fall"
+            wtext="$(gettext 'Intense snow fall')"
             ;;
 
         77)
             wicon="snow-and-sleet.svg"
-            wtext="Snow grains"
+            wtext="$(gettext 'Snow grains')"
             ;;
 
         80)
             wicon="rainy-1-night.svg"
-            wtext="Slight rain showers"
+            wtext="$(gettext 'Slight rain showers')"
             ;;
     
         81)
             wicon="rainy-2-night.svg"
-            wtext="Moderate rain showers"
+            wtext="$(gettext 'Moderate rain showers')"
             ;;
 
         82)
             wicon="rainy-3-night.svg"
-            wtext="Intense rain showers"
+            wtext="$(gettext 'Intense rain showers')"
             ;;
 
         85)
             wicon="snowy-1-night.svg"
-            wtext="Slight snow showers"
+            wtext="$(gettext 'Slight snow showers')"
             ;;
 
         86)
             wicon="snowy-3-night.svg"
-            wtext="Heavy snow showers"
+            wtext="$(gettext 'Heavy snow showers')"
             ;;
 
         95)
             wicon="scattered-thunderstorms-night.svg"
-            wtext="Thunderstorm"
+            wtext="$(gettext 'Thunderstorm')"
             ;;
     
         96)
             wicon="hail.svg"
-            wtext="Thunderstorm with slight hail"
+            wtext="$(gettext 'Thunderstorm with slight hail')"
             ;;
 
         99)
             wicon="hail.svg"
-            wtext="Thunderstorm with heavy hail"
+            wtext="$(gettext 'Thunderstorm with heavy hail')"
             ;;
 
 
         *)
-            wicon="dialog-no.svg"
-            wtext="unknown"
+            wicon="tornado.svg"
+            wtext="$(gettext 'unknown')"
             ;;
     
         esac       
@@ -397,11 +402,11 @@ function set_wind_suffix (){
          case "${windspeed_unit}" in
          
          kmh)
-            wind_speed_suffix="km/h"
+            wind_speed_suffix="kmh"
             ;;
 
          ms)
-            wind_speed_suffix="m/s"
+            wind_speed_suffix="ms"
             ;;
         
          mph)
@@ -409,7 +414,7 @@ function set_wind_suffix (){
             ;;
         
          kn)
-            wind_speed_suffix="knots"
+            wind_speed_suffix="kn"
             ;;
 
          *)
@@ -449,12 +454,12 @@ temp_unit=''                  #                             needed by https://ap
 windspeed_unit=''             # kmh, ms, mph, kn            needed by https://api.open-meteo.com/v1/forecast
 timeformat='iso8601'          #                             needed by https://api.open-meteo.com/v1/forecast
 timezone="$(date "+%Z")"      #                             needed by https://api.open-meteo.com/v1/forecast
-wicon=''                      # weather icon name
+wicon=''                      # weather icon indicator name
 wtext=''                      # current weather text description as privided by open-meteo.com
 icons_dir="/opt/yww-icons"    # weather icons location
-#epoch_time                   # used in function weather_icon_descriptor, a local variable
-temperature_suffix=''         # suffix F or C to be written in the tooltip
-wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
+#epoch_time                   # used in function weather_icon_descriptor, a local variable declared
+temperature_suffix=''         #  suffix F or C to be written in the tooltip
+wind_speed_suffix=''          #  suffix mph, kn to be written in the tooltip
 
 if [[ ! -d "${icons_dir}" ]] ; then
 
@@ -466,7 +471,7 @@ oldifs="${IFS}"
 
 IFS=$'|'
 
-location_and_units=($(yad --form --field='Location:CE' --field='Temperature Unit:CB' --field='Wind Speed Unit:CB' '' '^celsius!fahrenheit' '^kmh!ms!mph!kn'))
+location_and_units=($(yad --title="$(gettext 'Yww-setup')" --window-icon=$icons_dir/cloudy-1-day.svg --form --field="$(gettext 'Location:CE')" --field="$(gettext 'Temperature Unit:CB')" --field="$(gettext 'Wind Speed Unit:CB')" '' '^celsius!fahrenheit' '^kmh!ms!mph!kn'))
 
 location="${location_and_units[0]}"
 
@@ -483,9 +488,9 @@ set_wind_suffix
 
 # REQUEST lat log of a place to https://geocode.maps.co
 
-request_lat_lon=($(curl -s "https://geocode.maps.co/search?q=${location}" | \
+request_lat_lon=($(curl -k "https://geocode.maps.co/search?q=${location}" | \
     lat_lon_parser - | \
-    yad --list --column=Locations:TEXT))
+    yad --list --title="$(gettext 'Yww-setup')" --geometry=750x300 --window-icon=$icons_dir/cloudy-1-day.svg --column=Locations:TEXT))
 
 latitude="${request_lat_lon[0]}"
 longitude="${request_lat_lon[1]}"
@@ -497,18 +502,19 @@ longitude="${request_lat_lon[1]}"
 
 # REQUEST current weather to https://api.open-meteo.com/v1/forecast
 #       and assign it to an array, element 1 Temperature, element 2 Wind Speed, element 3 Wind Direction, element 4 Weather Code, element 5 sunset, element 6 sunrise
-weather_data=($(curl -s "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
+weather_data=($(curl -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 
 weather_icon_descriptor
 
-yad --notification --listen --text="$(printf 'Place: %s\n%s\nTemperature: %s %s\nWind Speed: %s %s\nWind Direction: %s °' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]}")" --image "${icons_dir}/${wicon}" --icon-size 46 #<&3 &
+yad --notification --listen --text="$(printf ''$(gettext 'Place:')' %s\n%s'$(gettext '\nTemperature:')' %s %s'$(gettext '\nWind')' '$(gettext 'Speed:')' %s %s'$(gettext '\nWind')' '$(gettext 'Direction:')' %s' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]}")" --image "${icons_dir}/${wicon}" --icon-size 46 #<&3 &
+
 
 while true ; do
 
 
-    sleep 33m
+    sleep 45m
     
-    weather_data=($(curl -s "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
+    weather_data=($(curl -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 
     weather_icon_descriptor
     
