@@ -388,7 +388,7 @@ function weather_icon_descriptor () {
 
         *)
             wicon="default-no.svg"
-            wtext="$(gettext 'unknown')"
+            wtext="$(gettext 'unavailable')"
             ;;
     
         esac       
@@ -418,7 +418,7 @@ function set_wind_suffix (){
             ;;
 
          *)
-            wind_speed_suffix="no available"
+            wind_speed_suffix="unavailable"
             ;;
     
         esac   
