@@ -235,7 +235,7 @@ function weather_icon_descriptor () {
 
 
         *)
-            wicon="tornado.svg"
+            wicon="default-no.svg"
             wtext="$(gettext 'unknown')"
             ;;
     
@@ -387,7 +387,7 @@ function weather_icon_descriptor () {
 
 
         *)
-            wicon="tornado.svg"
+            wicon="default-no.svg"
             wtext="$(gettext 'unknown')"
             ;;
     
@@ -402,11 +402,11 @@ function set_wind_suffix (){
          case "${windspeed_unit}" in
          
          kmh)
-            wind_speed_suffix="kmh"
+            wind_speed_suffix="km/h"
             ;;
 
          ms)
-            wind_speed_suffix="ms"
+            wind_speed_suffix="m/s"
             ;;
         
          mph)
@@ -414,7 +414,7 @@ function set_wind_suffix (){
             ;;
         
          kn)
-            wind_speed_suffix="kn"
+            wind_speed_suffix="knots"
             ;;
 
          *)
