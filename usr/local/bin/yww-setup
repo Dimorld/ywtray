@@ -473,7 +473,9 @@ location_and_units=($(yad \
 --title="$(gettext 'ywtray settings')" \
 --image="${icons_dir}/equator.png" \
 --center \
---text="$(gettext 'Retrieving latitude and longitude coordinates may take a few seconds')" \
+--text="$(gettext 'Type a place, and select your measuring units. Retrieving latitude and longitude coordinates may take a few seconds')" \
+--width=460 \
+--height=220 \
 --window-icon="${icons_dir}"/cloudy-1-day.svg \
 --form \
 --field="$(gettext 'Location:CE')" \
@@ -502,9 +504,10 @@ request_lat_lon=($(curl -k "https://geocode.maps.co/search?q=${location}" | \
      --image="${icons_dir}/location.svg" \
      --image-on-top \
      --center \
+     --width=600 \
+     --height=340 \
      --text-align=center \
      --text="$(gettext 'Choose the place closest to you')" \
-     --geometry=750x300 \
      --window-icon="${icons_dir}/cloudy-1-day.svg" \
      --column=Locations:TEXT))
 
