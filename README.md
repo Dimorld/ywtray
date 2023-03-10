@@ -11,7 +11,7 @@ Notificador del clima escrito en yad
 
 En construcción
 
-##Dependencias##
+## Dependencias
 =================
 
 - Curl
