@@ -17,4 +17,6 @@ En construcción
 - Curl
 - Api de Meteo
 
-<video src='https://www.youtube.com/watch?v=wpJ6XJjI1cM' width=180/>
+[![En ejecución](https://i9.ytimg.com/vi_webp/wpJ6XJjI1cM/mq3.webp?sqp=CIiBrqAG-oaymwEmCMACELQB8quKqQMa8AEB-AGgBoAC2gOKAgwIABABGFEgVihlMA8=&rs=AOn4CLBkKiWt7rlz5BHHVgkmDrPYQtUVjg)](https://www.youtube.com/watch?v=wpJ6XJjI1cM)
+
+
