@@ -473,7 +473,7 @@ IFS=$'|'
 
 location_and_units=($(yad \
 --title="$(gettext 'ywtray settings')" \
---image="${icons_dir}/equator.png" \
+--image="${icons_dir}/equator.svg" \
 --center \
 --text="$(gettext 'Type a place, and select your measuring units. Retrieving latitude and longitude coordinates may take a few seconds')" \
 --width=460 \
