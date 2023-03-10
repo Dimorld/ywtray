@@ -4,7 +4,7 @@
 #l10n nilsonmorales
 export TEXTDOMAIN=yww-setup
 export OUTPUT_CHARSET=UTF-8
-trap 'rm $named_pipe; printf "\n" ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT
+trap 'rm -f $named_pipe; printf "\n" ; kill -USR1 $YADPID ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT
 set -euo pipefail
 set -x
 
