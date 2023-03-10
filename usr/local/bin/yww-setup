@@ -502,7 +502,7 @@ set_wind_suffix
 request_lat_lon=($(curl -k "https://geocode.maps.co/search?q=${location}" | \
     lat_lon_parser - | \
     yad --list \
-     --title="$(gettext 'ywtray - location selection')" \
+     --title="$(gettext 'ywtray - Location selection')" \
      --image="${icons_dir}/location.svg" \
      --image-on-top \
      --center \
