@@ -472,10 +472,10 @@ oldifs="${IFS}"
 IFS=$'|'
 
 location_and_units=($(yad \
---title="$(gettext 'ywtray settings')" \
---image="${icons_dir}/equator.svg" \
+--title="$(gettext 'ywtray - settings')" \
+--image="${icons_dir}/equator.png" \
 --center \
---text="$(gettext 'Type a place, and select your measuring units. Retrieving latitude and longitude coordinates may take a few seconds')" \
+--text="$(gettext 'Type a place, and select your measuring units. Retrieving the latitude and longitude coordinates may take a few seconds')" \
 --width=460 \
 --height=220 \
 --window-icon="${icons_dir}"/cloudy-1-day.svg \
@@ -509,7 +509,7 @@ request_lat_lon=($(curl -k "https://geocode.maps.co/search?q=${location}" | \
      --width=600 \
      --height=340 \
      --text-align=center \
-     --text="$(gettext 'Choose the place closest to you')" \
+     --text="$(gettext 'Choose the nearest place to your location')" \
      --window-icon="${icons_dir}/cloudy-1-day.svg" \
      --column=Locations:TEXT))
 
