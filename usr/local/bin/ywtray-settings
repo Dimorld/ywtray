@@ -1,0 +1,84 @@
+# /usr/bin/env bash
+set -euo pipefail
+set -x
+source "./yww-functions"
+# VARIABLES 
+location=''                   # Town, Country OR State      needed by https://geocode.maps.co
+declare -a weather_data       # array to store data variables requested to open-meteo
+declare -a location_and_units # array to store location and weather preferred units
+declare -a request_lat_lon    # array to store the latitude and longitude pair for the location
+latitude=''                   #                             needed by https://api.open-meteo.com/v1/forecast
+longitude=''                  #                             needed by https://api.open-meteo.com/v1/forecast
+current_weather='true'        #                             needed by https://api.open-meteo.com/v1/forecast
+temp_unit=''                  #                             needed by https://api.open-meteo.com/v1/forecast
+windspeed_unit=''             # kmh, ms, mph, kn            needed by https://api.open-meteo.com/v1/forecast
+timeformat='iso8601'          #                             needed by https://api.open-meteo.com/v1/forecast
+timezone="$(date "+%Z")"      #                             needed by https://api.open-meteo.com/v1/forecast
+wicon=''                      # weather icon indicator name
+wtext=''                      # current weather text description as privided by open-meteo.com
+icons_dir="/opt/yww-icons"    # weather icons location
+#epoch_time                   # used in function weather_icon_descriptor, a local variable declared
+temperature_suffix=''         # suffix F or C to be written in the tooltip
+wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
+pid_tray=''                   # process id of the yad dialog icon notifier
+oldifs="${IFS}"
+IFS=$'|'
+
+
+location_and_units=($(yad \
+--title="$(gettext 'ywtray - settings')" \
+--image="${icons_dir}/equator.png" \
+--center \
+--text="$(gettext 'Type a place, and select your measuring units. Retrieving the latitude and longitude coordinates may take a few seconds')" \
+--width=460 \
+--height=220 \
+--window-icon="${icons_dir}"/cloudy-1-day.svg \
+--form \
+--field="$(gettext 'Location:CE')" \
+--field="$(gettext 'Temperature Unit:CB')" \
+--field="$(gettext 'Wind Speed Unit:CB')" '' '^celsius!fahrenheit' '^kmh!ms!mph!kn'))
+
+#printf -- "first_run=\"false\"\n" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
+location="${location_and_units[0]}" 
+printf -- "location=\"%s\"\n" "${location_and_units[0]}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
+
+temp_unit="${location_and_units[1]}"
+printf -- "temp_unit=\"%s\"\n" "${location_and_units[1]}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
+windspeed_unit="${location_and_units[2]}"
+printf -- "windspeed_unit=\"%s\"\n" "${location_and_units[2]}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
+IFS="${oldifs}"
+
+set_temperature_suffix
+printf -- "temperature_suffix=\"%s\"\n" "${temperature_suffix}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
+set_wind_suffix
+printf -- "wind_speed_suffix=\"%s\"\n" "${wind_speed_suffix}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
+# REQUEST lat log of a place to https://geocode.maps.co
+
+request_lat_lon=($(curl -s -k "https://geocode.maps.co/search?q=${location}" | \
+    lat_lon_parser - | \
+    yad --list \
+     --title="$(gettext 'ywtray - location selection')" \
+     --image="${icons_dir}/location.svg" \
+     --image-on-top \
+     --center \
+     --width=600 \
+     --height=340 \
+     --text-align=center \
+     --text="$(gettext 'Choose the nearest place to your location')" \
+     --window-icon="${icons_dir}/cloudy-1-day.svg" \
+     --column=Locations:TEXT))
+
+
+latitude="${request_lat_lon[0]}"
+printf -- "latitude=\"%s\"\n" "${latitude}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
+longitude="${request_lat_lon[1]}"
+printf -- "longitude=\"%s\"\n" "${longitude}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
+exit 0

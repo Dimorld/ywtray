@@ -1,0 +1,27 @@
+#! /usr/bin/env bash
+set -euo pipefail
+set -x
+source "/root/ywtray/.config/ywtray/ywtray.conf"
+
+case "${first_run}" in
+    
+    false)
+        
+        "/root/ywtray/usr/local/bin/yww-setup"
+        ;;
+     
+    
+    true)
+    
+        sed -i "s/true/false/g" "/root/ywtray/.config/ywtray/ywtray.conf"
+        "/root/ywtray/usr/local/bin/ywtray-settings"
+        "/root/ywtray/usr/local/bin/yww-setup"
+        ;;
+    
+    *)
+        echo "somethin wrong"
+        ;;
+
+esac
+
+exit 0
