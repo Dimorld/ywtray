@@ -2,9 +2,9 @@
 #By Tenoch 
 #i18n nilsonmorales
 #l10n nilsonmorales
+trap 'rm -f $named_pipe; printf "\n" ; kill -USR1 $YADPID ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT
 export TEXTDOMAIN=yww-setup
 export OUTPUT_CHARSET=UTF-8
-trap 'rm -f $named_pipe; printf "\n" ; kill -USR1 $YADPID ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT
 set -euo pipefail
 set -x
 
@@ -461,14 +461,24 @@ icons_dir="/opt/yww-icons"    # weather icons location
 temperature_suffix=''         # suffix F or C to be written in the tooltip
 wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
 
-named_pipe="$(mktemp -u "/tmp/XXXXXXXXXXXXX")"
-
+named_pipe="$(mktemp -u "/tmp/ywtrayXXXXXXXXXXXXX")"
+mkfifo "${named_pipe}"
+exec 3<> "${named_pipe}"
 
 oldifs="${IFS}"
 
 IFS=$'|'
 
-location_and_units=($(yad --title="$(gettext 'Yww-setup')" --window-icon=$icons_dir/cloudy-1-day.svg --form --field="$(gettext 'Location:CE')" --field="$(gettext 'Temperature Unit:CB')" --field="$(gettext 'Wind Speed Unit:CB')" '' '^celsius!fahrenheit' '^kmh!ms!mph!kn'))
+location_and_units=($(yad \
+--title="$(gettext 'ywtray settings')" \
+--image="${icons_dir}/equator.png" \
+--center \
+--text="$(gettext 'Retrieving latitude and longitude coordinates may take a few seconds')" \
+--window-icon="${icons_dir}"/cloudy-1-day.svg \
+--form \
+--field="$(gettext 'Location:CE')" \
+--field="$(gettext 'Temperature Unit:CB')" \
+--field="$(gettext 'Wind Speed Unit:CB')" '' '^celsius!fahrenheit' '^kmh!ms!mph!kn'))
 
 location="${location_and_units[0]}"
 
@@ -487,13 +497,21 @@ set_wind_suffix
 
 request_lat_lon=($(curl -k "https://geocode.maps.co/search?q=${location}" | \
     lat_lon_parser - | \
-    yad --list --title="$(gettext 'Yww-setup')" --geometry=750x300 --window-icon=$icons_dir/cloudy-1-day.svg --column=Locations:TEXT))
+    yad --list \
+     --title="$(gettext 'ywtray - location selection')" \
+     --image="${icons_dir}/location.svg" \
+     --image-on-top \
+     --center \
+     --text-align=center \
+     --text="$(gettext 'Choose the place closest to you')" \
+     --geometry=750x300 \
+     --window-icon="${icons_dir}/cloudy-1-day.svg" \
+     --column=Locations:TEXT))
 
 latitude="${request_lat_lon[0]}"
 longitude="${request_lat_lon[1]}"
 
-mkfifo "${named_pipe}"
-exec 3<> "${named_pipe}"
+
 
 
 
@@ -503,7 +521,11 @@ weather_data=($(curl -k "https://api.open-meteo.com/v1/forecast?latitude=${latit
 
 weather_icon_descriptor
 
-yad --notification --listen --text="$(printf ''$(gettext 'Place:')' %s\n%s'$(gettext '\nTemperature:')' %s %s'$(gettext '\nWind')' '$(gettext 'Speed:')' %s %s'$(gettext '\nWind')' '$(gettext 'Direction:')' %s' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]} °")" --image "${icons_dir}/${wicon}" --icon-size 46 <&3 &
+yad --notification \
+--listen \
+--text="$(printf ''$(gettext 'Place:')' %s\n%s'$(gettext '\nTemperature:')' %s %s'$(gettext '\nWind')' '$(gettext 'Speed:')' %s %s'$(gettext '\nWind')' '$(gettext 'Direction:')' %s' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]} °")" \
+--image "${icons_dir}/${wicon}" \
+--icon-size 46 <&3 &
 
 
 while true ; do
