@@ -1,10 +1,16 @@
-YWTRAY
+YWTRAY     🌦
 =============
 
 Notificador del clima escrito en yad
-![screenshot](https://i.postimg.cc/hPJDg4sD/set-place.png) ![screenshot](https://i.postimg.cc/gkfY09tv/tooltip.png)
+
+![screenshot](https://i.postimg.cc/cJXscvTS/image-16.png) 
+![screenshot](https://i.postimg.cc/XJP4TtT1/image-18.png)
+![screenshot](https://i.postimg.cc/HxnTvTP7/image-19.png)
 
 En construcción
 
-##Forma de Uso##
-======================================
+##Dependencias##
+=================
+
+- Curl
+- Api de Meteo
