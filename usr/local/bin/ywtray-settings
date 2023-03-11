@@ -86,7 +86,7 @@ request_lat_lon=($(curl -s -k "https://geocode.maps.co/search?q=${location}" | \
 
 latitude="${request_lat_lon[0]-default}"
 
-[[ "${latitude}" =~ [0-9-] ]]  || { yad --splash --on-top --button='yad-ok:0' --center --text="$(gettext 'No coordinates found, try again')" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; }
+[[ "${latitude}" =~ [0-9-] ]]  || { yad --splash --on-top --button='yad-ok:0' --center --text="$(gettext 'No coordinates found, try again')" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; exit 3 ; }
 
 printf -- "latitude=\"%s\"\n" "${latitude}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
