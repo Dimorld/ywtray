@@ -7,7 +7,7 @@ set -euo pipefail
 set -x
 export TEXTDOMAIN=yww-setup
 export OUTPUT_CHARSET=UTF-8
-source "./yww-functions"
+source "/root/ywtray/usr/local/bin/yww-functions"
 # VARIABLES 
 location=''                   # Town, Country OR State      needed by https://geocode.maps.co
 declare -a weather_data       # array to store data variables requested to open-meteo
