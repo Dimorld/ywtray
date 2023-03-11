@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 set -euo pipefail
 set -x
+export TEXTDOMAIN=yww-start
+export OUTPUT_CHARSET=UTF-8
 source "/root/ywtray/.config/ywtray/ywtray.conf"
 
 case "${first_run}" in
@@ -19,7 +21,19 @@ case "${first_run}" in
         ;;
     
     *)
-        echo "somethin wrong"
+        if [[ -a "/root/.config/yawtray/ywtray.conf" ]]; then
+            
+            printf -- "first_run=\"true\"" > "/root/ywtray/.config/ywtray/ywtray.conf"
+            
+        else
+            
+            mkdir -p "/root/.config/yawtray/ywtray.conf"
+            
+            printf -- "first_run=\"true\"" > "/root/ywtray/.config/ywtray/ywtray.conf"
+        fi
+        
+        yad --splash --on-top --undecorated --no-buttons --center --timeout=3 --text="$(gettext 'Start the program again')"
+        
         ;;
 
 esac
