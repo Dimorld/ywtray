@@ -1,4 +1,4 @@
-# /usr/bin/env bash
+#!/usr/bin/env bash
 set -eou pipefail
 trap 'printf -- "first_run="true"\n" > "/root/ywtray/.config/ywtray/ywtray.conf ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT
 
