@@ -1,6 +1,7 @@
 # /usr/bin/env bash
-trap "printf -- \"first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf ; " ERR
 set -eou pipefail
+trap 'printf -- "first_run="true"\n" > "/root/ywtray/.config/ywtray/ywtray.conf ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT
+
 source "/root/ywtray/usr/local/bin/yww-functions"
 # VARIABLES 
 location=''                   # Town, Country OR State      needed by https://geocode.maps.co
@@ -38,7 +39,6 @@ location_and_units=($(yad \
 --field="$(gettext 'Temperature Unit:CB')" \
 --field="$(gettext 'Wind Speed Unit:CB')" '' '^celsius!fahrenheit' '^kmh!ms!mph!kn'))
 
-#printf -- "first_run=\"false\"\n" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
 location="${location_and_units[0]}"
 
@@ -70,20 +70,18 @@ request_lat_lon=($(curl -s -k "https://geocode.maps.co/search?q=${location}" | \
      --center \
      --width=600 \
      --height=340 \
-     --text-align=center \
+     --text-align=left \
      --buttons-layout="end" \
      --button=yad-cancel:0 --button=yad-ok:0  \
      --escape-ok \
-     --text="$(gettext 'Choose the nearest place to your location')" \
+     --text="$(gettext 'Choose the nearest place to your location\nIf no coordinates are found click Cancel and try a different place')" \
      --window-icon="${icons_dir}/cloudy-1-day.svg" \
      --column=Locations:TEXT))
 
-set -x
 latitude="${request_lat_lon[0]-default}"
 
-( [[ "${latitude}" =~ [0-9-] ]] ) || ( yad --splash --on-top --button='yad-ok:0' --center --text="$(gettext 'No coordinates found, try again')" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; exit 2)
+[[ "${latitude}" =~ [0-9-] ]]  || { yad --splash --on-top --button='yad-ok:0' --center --text="$(gettext 'No coordinates found, try again')" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; exit 3 ; }
 
-set +x
 printf -- "latitude=\"%s\"\n" "${latitude}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
 longitude="${request_lat_lon[1]}"
