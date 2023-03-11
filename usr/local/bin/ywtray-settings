@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
-trap "trap_action ; " ERR
-set -eou -pipefail
+trap "trap_action" ERR
+set -eou pipefail
 source "/root/ywtray/usr/local/bin/yww-functions"
 
 function trap_action (){
