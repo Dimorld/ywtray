@@ -2,8 +2,10 @@
 # 
 # i18n nilsonmorales
 # l10n nilsonmorales
-trap 'rm -f $named_pipe; printf "\n" ; kill -9 $pid_tray ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT SIGTERM SIGKILL
-set -euo pipefail
+trap ' ywtray_kill ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT SIGTERM SIGKILL
+set -Ee
+set -u 
+set -o errtrace
 set -x
 export TEXTDOMAIN=yww-setup
 export OUTPUT_CHARSET=UTF-8
@@ -29,7 +31,19 @@ wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
 pid_tray=''                   # process id of the yad dialog icon notifier
 
 
-named_pipe="$(mktemp -u "/tmp/ywtrayXXXXXXXXXXXXX")"
+
+function ywtray_close () {
+    
+    rm -f "${named_pipe}"	
+    kill -USR1 "$YAD_PID"
+    kill -9 "$(ps aux | grep "yww-setup" | awk 'NR==1{print $2}')"
+    kill -9 "$(ps aux | grep "yww-start" | awk 'NR==1{print $2}')"
+}
+export -f ywtray_close
+
+
+
+export named_pipe="$(mktemp -u "/tmp/ywtrayXXXXXXXXXXXXX")"
 
 
 
@@ -54,6 +68,7 @@ yad --notification \
 --listen \
 --text="$(printf ''$(gettext 'Place:')' %s\n%s'$(gettext '\nTemperature:')' %s %s'$(gettext '\nWind')' '$(gettext 'Speed:')' %s %s'$(gettext '\nWind')' '$(gettext 'Direction:')' %s' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]} °")" \
 --image "${icons_dir}/${wicon}" \
+--menu="Quit!bash -c ywtray_close!exit" \
 --no-middle \
 --command=":" \
 --icon-size 46 <&3 &
@@ -65,7 +80,7 @@ pid_tray=$!
 while true ; do
 
 
-    sleep 18s
+    sleep 10s
     
     weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 
