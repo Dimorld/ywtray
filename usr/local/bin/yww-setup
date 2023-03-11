@@ -2,7 +2,7 @@
 # 
 # i18n nilsonmorales
 # l10n nilsonmorales
-trap ' ywtray_kill ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT SIGTERM SIGKILL
+trap 'ywtray_close ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT SIGTERM SIGKILL
 set -Ee
 set -u 
 set -o errtrace
@@ -39,6 +39,7 @@ function ywtray_close () {
     kill -9 "$(ps aux | grep "yww-setup" | awk 'NR==1{print $2}')"
     kill -9 "$(ps aux | grep "yww-start" | awk 'NR==1{print $2}')"
 }
+
 export -f ywtray_close
 
 
