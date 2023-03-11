@@ -73,7 +73,7 @@ while true ; do
     
     echo "icon:${icons_dir}/${wicon}" > "${named_pipe}"
     
-    echo "tooltip:$(gettext Place:) ${location}\n$(gettext Temperature:) ${weather_data[0]} ${temperature_suffix}\n$(gettext Wind Speed:) ${weather_data[1]} ${wind_speed_suffix}\n$(gettext Wind Direction:) ${weather_data[2]} °" >> "${named_pipe}"
+    echo "tooltip:$(gettext Place:) ${location}\n${wtext}\n$(gettext Temperature:) ${weather_data[0]} ${temperature_suffix}\n$(gettext Wind Speed:) ${weather_data[1]} ${wind_speed_suffix}\n$(gettext Wind Direction:) ${weather_data[2]} °" >> "${named_pipe}"
     
 
 done
