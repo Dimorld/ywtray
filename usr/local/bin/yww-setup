@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
-#By Tenoch 
-#i18n nilsonmorales
-#l10n nilsonmorales
+#! /usr/bin/env bash
+# By Tenoch 
+# i18n nilsonmorales
+# l10n nilsonmorales
 trap 'rm -f $named_pipe; printf "\n" ; kill -9 $pid_tray ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT SIGTERM SIGKILL
 set -euo pipefail
 set -x
@@ -65,7 +65,7 @@ pid_tray=$!
 while true ; do
 
 
-    sleep 10m
+    sleep 18s
     
     weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 

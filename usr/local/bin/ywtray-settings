@@ -1,8 +1,14 @@
-# /usr/bin/env bash
-set -eou pipefail
-trap 'printf -- "first_run="true"\n" > "/root/ywtray/.config/ywtray/ywtray.conf ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT
-
+#! /usr/bin/env bash
+trap "trap_action ; " ERR
+#set -eou -pipefail
 source "/root/ywtray/usr/local/bin/yww-functions"
+
+function trap_action (){
+
+        printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf"
+    
+}
+
 # VARIABLES 
 location=''                   # Town, Country OR State      needed by https://geocode.maps.co
 declare -a weather_data       # array to store data variables requested to open-meteo
@@ -68,19 +74,19 @@ request_lat_lon=($(curl -s -k "https://geocode.maps.co/search?q=${location}" | \
      --image="${icons_dir}/location.svg" \
      --image-on-top \
      --center \
-     --width=600 \
-     --height=340 \
-     --text-align=left \
+     --width="600" \
+     --height="340" \
+     --text-align="left" \
      --buttons-layout="end" \
-     --button=yad-cancel:0 --button=yad-ok:0  \
+     --button="yad-cancel:0" --button="yad-ok:0"  \
      --escape-ok \
      --text="$(gettext 'Choose the nearest place to your location\nIf no coordinates are found click Cancel and try a different place')" \
      --window-icon="${icons_dir}/cloudy-1-day.svg" \
-     --column=Locations:TEXT))
+     --column="Locations:TEXT"))
 
 latitude="${request_lat_lon[0]-default}"
 
-[[ "${latitude}" =~ [0-9-] ]]  || { yad --splash --on-top --button='yad-ok:0' --center --text="$(gettext 'No coordinates found, try again')" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; exit 3 ; }
+[[ "${latitude}" =~ [0-9-] ]]  || { yad --splash --on-top --button='yad-ok:0' --center --text="$(gettext 'No coordinates found, try again')" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; }
 
 printf -- "latitude=\"%s\"\n" "${latitude}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 

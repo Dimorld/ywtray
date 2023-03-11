@@ -5,7 +5,7 @@ set -x
 export TEXTDOMAIN=yww-start
 export OUTPUT_CHARSET=UTF-8
 source "/root/ywtray/.config/ywtray/ywtray.conf" || \
-(mkdir -p "/root/.config/ywtray/ywtray.conf" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; yad --splash --skip-taskbar --on-top --undecorated button='yad-ok:0' --center --text="$(gettext 'Start the program again')")
+{ mkdir -p "/root/.config/ywtray/ywtray.conf" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; yad --splash --skip-taskbar --on-top --undecorated button='yad-ok:0' --center --text="$(gettext 'Start the program again')" ; }
 
 case "${first_run}"  in
     
