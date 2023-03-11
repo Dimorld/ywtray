@@ -36,8 +36,8 @@ function ywtray_close () {
     
     rm -f "${named_pipe}"	
     kill -USR1 "$YAD_PID"
-    kill -9 "$(ps aux | grep "yww-setup" | awk 'NR==1{print $2}')"
-    kill -9 "$(ps aux | grep "yww-start" | awk 'NR==1{print $2}')"
+    kill -9 "$(ps aux | grep "yww-setup" | awk 'NR==1 && /yww-setup/ && /bash/{print $2}')"
+    kill -9 "$(ps aux | grep "yww-start" | awk 'NR==1 && /yww-start/ && /bash/{print $2}')"
 }
 
 export -f ywtray_close
@@ -89,7 +89,7 @@ while true ; do
     
     echo "icon:${icons_dir}/${wicon}" > "${named_pipe}"
     
-    echo "tooltip:$(gettext Place:) ${location}\n${wtext}\n$(gettext Temperature:) ${weather_data[0]} ${temperature_suffix}\n$(gettext Wind Speed:) ${weather_data[1]} ${wind_speed_suffix}\n$(gettext Wind Direction:) ${weather_data[2]} °" >> "${named_pipe}"
+    echo "tooltip:$(gettext Place:) ${location}\n${wtext}\n$(gettext Temperature:) ${weather_data[0]} ${temperature_suffix}\n$(gettext "Wind Speed:") ${weather_data[1]} ${wind_speed_suffix}\n$(gettext "Wind Direction:") ${weather_data[2]} °" >> "${named_pipe}"
     
 
 done
