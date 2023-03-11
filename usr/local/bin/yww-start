@@ -1,11 +1,13 @@
 #! /usr/bin/env bash
+trap 's=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT
 set -euo pipefail
 set -x
 export TEXTDOMAIN=yww-start
 export OUTPUT_CHARSET=UTF-8
-source "/root/ywtray/.config/ywtray/ywtray.conf"
+source "/root/ywtray/.config/ywtray/ywtray.conf" || \
+(mkdir -p "/root/.config/ywtray/ywtray.conf" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; yad --splash --skip-taskbar --on-top --undecorated button='yad-ok:0' --center --text="$(gettext 'Start the program again')")
 
-case "${first_run}" in
+case "${first_run}"  in
     
     false)
         
@@ -21,18 +23,18 @@ case "${first_run}" in
         ;;
     
     *)
-        if [[ -a "/root/.config/yawtray/ywtray.conf" ]]; then
+        if [[ -f "/root/.config/yawtray/ywtray.conf" ]]; then
             
-            printf -- "first_run=\"true\"" > "/root/ywtray/.config/ywtray/ywtray.conf"
+            printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf"
             
         else
             
-            mkdir -p "/root/.config/yawtray/ywtray.conf"
+            mkdir -p "/root/.config/ywtray/ywtray.conf"
             
-            printf -- "first_run=\"true\"" > "/root/ywtray/.config/ywtray/ywtray.conf"
+            printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf"
         fi
         
-        yad --splash --on-top --undecorated --no-buttons --center --timeout=3 --text="$(gettext 'Start the program again')"
+        yad --splash --skip-taskbar --on-top --undecorated --button='yad-ok:0' --center --text="$(gettext 'Start the program again')"
         
         ;;
 
