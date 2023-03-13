@@ -6,10 +6,10 @@ trap 'ywtray_close ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMM
 set -Ee
 set -u 
 set -o errtrace
-set -x
-export TEXTDOMAIN=yww-setup
-export OUTPUT_CHARSET=UTF-8
-source "/root/ywtray/usr/local/bin/yww-functions"
+#set -x
+export TEXTDOMAIN="ywtray-core"
+export OUTPUT_CHARSET="UTF-8"
+source "/root/ywtray/usr/local/bin/ywtray-functions"
 # VARIABLES 
 location=''                   # Town, Country OR State      needed by https://geocode.maps.co
 declare -a weather_data       # array to store data variables requested to open-meteo
@@ -21,10 +21,11 @@ current_weather='true'        #                             needed by https://ap
 temp_unit=''                  #                             needed by https://api.open-meteo.com/v1/forecast
 windspeed_unit=''             # kmh, ms, mph, kn            needed by https://api.open-meteo.com/v1/forecast
 timeformat='iso8601'          #                             needed by https://api.open-meteo.com/v1/forecast
-timezone="$(date "+%Z")"      #                             needed by https://api.open-meteo.com/v1/forecast
+timezone="auto"
+#timezone="$(date "+%Z")"      #                             needed by https://api.open-meteo.com/v1/forecast
 wicon=''                      # weather icon indicator name
 wtext=''                      # current weather text description as privided by open-meteo.com
-icons_dir="/opt/yww-icons"    # weather icons location
+export icons_dir="/opt/yww-icons"    # weather icons location
 #epoch_time                   # used in function weather_icon_descriptor, a local variable declared
 temperature_suffix=''         # suffix F or C to be written in the tooltip
 wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
@@ -36,28 +37,74 @@ function ywtray_close () {
     
     rm -f "${named_pipe}"	
     kill -USR1 "$YAD_PID"
-    kill -9 "$(ps aux | grep "yww-setup" | awk 'NR==1 && /yww-setup/ && /bash/{print $2}')"
-    kill -9 "$(ps aux | grep "yww-start" | awk 'NR==1 && /yww-start/ && /bash/{print $2}')"
+    kill -9 "$(ps aux | grep "ywtray-core" | awk 'NR==1 && /ywtray-core/ && /bash/{print $2}')"
+    kill -9 "$(ps aux | grep "ywtray-start" | awk 'NR==1 && /ywtray-start/ && /bash/{print $2}')"
 }
 
 export -f ywtray_close
 
+function ywtray_reset () {
+    set -x
+    yad \
+     --title="$(gettext 'ywtray - reset')" \
+     --image="dialog-warning" \
+     --center \
+     --text="$(gettext 'Do you want to reset your ywtray settings?')" \
+     --window-icon="${icons_dir}/cloudy-1-day.svg" \
+     --button=$(gettext no)!gtk-no:1 \
+     --button=$(gettext yes)!gtk-ok:0
+    
+    reset_answer="${?}"
+    
+    if [[ $reset_answer = 0 ]]; then
 
+        rm -f "${named_pipe}"
+        
+        c1=$?
+        
+        kill -USR1 "$YAD_PID"
+        
+        c2=$?
+        
+        kill -9 "$(ps aux | grep "ywtray-core" | awk 'NR==1 && /ywtray-core/ && /bash/{print $2}')"
+        
+        c3=$?
+        
+        kill -9 "$(ps aux | grep "ywtray-start" | awk 'NR==1 && /ywtray-start/ && /bash/{print $2}')"
+        
+        c4=$?
+        
+        printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf"
+        
+        c5=$?
+
+        if [[ "${c1}" = "0" && "${c2}" = "0" && "${c3}" = "0" && "${c5}" = "0" ]]; then
+    
+            reset_result_message="$(gettext "ywtray has been sucesully reset, start the program again")"
+            reset_result_icon="dialog-information"
+        
+        else
+     
+            reset_result_message="$(gettext "Somethig went wrong, start the program again")"
+            reset_result_icon="dialog-error"
+        fi
+
+      
+    yad --splash --image="${reset_result_icon}" --skip-taskbar --no-buttons --timeout="3" --on-top --undecorated --center --text="${reset_result_message}" &
+        
+    fi
+
+
+}
+
+export -f ywtray_reset
 
 export named_pipe="$(mktemp -u "/tmp/ywtrayXXXXXXXXXXXXX")"
 
-
-
 mkfifo "${named_pipe}"
 exec 3<> "${named_pipe}"
-#function on_exit (){
-    
-#    exec 3<> "${named_pipe}" 
-    
-#    echo "quit" >&3
-    
-#    rm -f "${named_pipe}"
-#}
+
+
 source "/root/ywtray/.config/ywtray/ywtray.conf"
 weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 
@@ -69,7 +116,7 @@ yad --notification \
 --listen \
 --text="$(printf ''$(gettext 'Place:')' %s\n%s'$(gettext '\nTemperature:')' %s %s'$(gettext '\nWind')' '$(gettext 'Speed:')' %s %s'$(gettext '\nWind')' '$(gettext 'Direction:')' %s' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]} °")" \
 --image "${icons_dir}/${wicon}" \
---menu="Quit!bash -c ywtray_close!exit" \
+--menu="Quit!bash -c ywtray_close!exit|Reset!bash -c ywtray_reset!reload" \
 --no-middle \
 --command=":" \
 --icon-size 46 <&3 &
@@ -81,7 +128,7 @@ pid_tray=$!
 while true ; do
 
 
-    sleep 10s
+    sleep 13s
     
     weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 
