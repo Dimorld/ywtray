@@ -1,0 +1,114 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ywtray-core package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ywtray-core VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-13 17:47-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ywtray-core.sh:49
+msgid "ywtray - reset"
+msgstr ""
+
+#: ywtray-core.sh:52
+msgid "Do you want to reset your ywtray settings?"
+msgstr ""
+
+#: ywtray-core.sh:54
+msgid "no"
+msgstr ""
+
+#: ywtray-core.sh:55
+msgid "yes"
+msgstr ""
+
+#: ywtray-core.sh:83
+msgid "ywtray has been successfully reset, start the program again"
+msgstr ""
+
+#: ywtray-core.sh:88
+msgid "Something went wrong, start the program again"
+msgstr ""
+
+#: ywtray-core.sh:117 ywtray-core.sh:139 yww-setup.sh:70 yww-setup.sh:92
+msgid "Place:"
+msgstr ""
+
+#: ywtray-core.sh:117 yww-setup.sh:70
+msgid "\\nTemperature:"
+msgstr ""
+
+#: ywtray-core.sh:117 yww-setup.sh:70
+msgid "\\nWind"
+msgstr ""
+
+#: ywtray-core.sh:117 yww-setup.sh:70
+msgid "Speed:"
+msgstr ""
+
+#: ywtray-core.sh:117 yww-setup.sh:70
+msgid "Direction:"
+msgstr ""
+
+#: ywtray-core.sh:139 yww-setup.sh:92
+msgid "Temperature:"
+msgstr ""
+
+#: ywtray-core.sh:139
+msgid "Wind Speed:"
+msgstr ""
+
+#: ywtray-core.sh:139
+msgid "Wind Direction:"
+msgstr ""
+
+#: ywtray-settings.sh:41
+msgid "ywtray - settings"
+msgstr ""
+
+#: ywtray-settings.sh:44
+msgid "Type a place, and select your measuring units. Retrieving the latitude and longitude coordinates may take a few seconds"
+msgstr ""
+
+#: ywtray-settings.sh:49
+msgid "Location:CE"
+msgstr ""
+
+#: ywtray-settings.sh:50
+msgid "Temperature Unit:CB"
+msgstr ""
+
+#: ywtray-settings.sh:51
+msgid "Wind Speed Unit:CB"
+msgstr ""
+
+#: ywtray-settings.sh:75
+msgid "ywtray - location selection"
+msgstr ""
+
+#: ywtray-settings.sh:85
+msgid "Choose the nearest place to your location\\nIf no coordinates are found click Cancel and try a different place"
+msgstr ""
+
+#: ywtray-settings.sh:91
+msgid "No coordinates found, try again"
+msgstr ""
+
+#: ywtray-start.sh:8 ywtray-start.sh:37 ywtray.sh:8 ywtray.sh:37
+msgid "Start the program again"
+msgstr ""
+
+#: yww-setup.sh:92
+msgid "Wind"
+msgstr ""
