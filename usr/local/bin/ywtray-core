@@ -31,7 +31,7 @@ temperature_suffix=''         # suffix F or C to be written in the tooltip
 wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
 pid_tray=''                   # process id of the yad dialog icon notifier
 
-
+export icons_dir
 
 function ywtray_close () {
     
