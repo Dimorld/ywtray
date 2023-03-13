@@ -6,7 +6,7 @@ trap 'ywtray_close ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMM
 set -Ee
 set -u 
 set -o errtrace
-#set -x
+set -x
 export TEXTDOMAIN="ywtray-core"
 export OUTPUT_CHARSET="UTF-8"
 source "/root/ywtray/usr/local/bin/ywtray-functions"
@@ -25,7 +25,7 @@ timezone="auto"
 #timezone="$(date "+%Z")"      #                             needed by https://api.open-meteo.com/v1/forecast
 wicon=''                      # weather icon indicator name
 wtext=''                      # current weather text description as privided by open-meteo.com
-export icons_dir="/opt/yww-icons"    # weather icons location
+icons_dir="/root/ywtray/opt/yww-icons"    # weather icons location
 #epoch_time                   # used in function weather_icon_descriptor, a local variable declared
 temperature_suffix=''         # suffix F or C to be written in the tooltip
 wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
@@ -80,12 +80,12 @@ function ywtray_reset () {
 
         if [[ "${c1}" = "0" && "${c2}" = "0" && "${c3}" = "0" && "${c5}" = "0" ]]; then
     
-            reset_result_message="$(gettext "ywtray has been sucesully reset, start the program again")"
+            reset_result_message="$(gettext "ywtray has been successfully reset, start the program again")"
             reset_result_icon="dialog-information"
         
         else
      
-            reset_result_message="$(gettext "Somethig went wrong, start the program again")"
+            reset_result_message="$(gettext "Something went wrong, start the program again")"
             reset_result_icon="dialog-error"
         fi
 
@@ -128,7 +128,7 @@ pid_tray=$!
 while true ; do
 
 
-    sleep 13s
+    sleep 27m
     
     weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 
