@@ -3,10 +3,10 @@
 # i18n nilsonmorales
 # l10n nilsonmorales
 trap 'ywtray_close ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT SIGTERM SIGKILL
-set -Ee
-set -u 
-set -o errtrace
-set -x
+#set -Ee
+#set -u 
+#set -o errtrace
+#set -x
 export TEXTDOMAIN=ywtray
 export OUTPUT_CHARSET=UTF-8
 source "/root/ywtray/usr/local/bin/ywtray-functions"

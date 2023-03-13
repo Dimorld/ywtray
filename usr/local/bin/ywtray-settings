@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+. gettext.sh
 export TEXTDOMAIN=ywtray
 export OUTPUT_CHARSET=UTF-8
 trap "trap_action" ERR
-set -eou pipefail
+#set -eou pipefail
 source "/root/ywtray/usr/local/bin/ywtray-functions"
 # VARIABLES 
 location=''                   # Town, Country OR State      needed by https://geocode.maps.co
