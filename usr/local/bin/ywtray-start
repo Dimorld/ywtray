@@ -2,8 +2,8 @@
 trap 's=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR
 set -euo pipefail
 set -x
-export TEXTDOMAIN="ywtray-start"
-export OUTPUT_CHARSET="UTF-8"
+export TEXTDOMAIN=ywtray
+export OUTPUT_CHARSET=UTF-8
 source "/root/ywtray/.config/ywtray/ywtray.conf" || \
 { touch "/root/ywtray/.config/ywtray/ywtray.conf" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; yad --splash --skip-taskbar --on-top --undecorated button='yad-ok:0' --center --text="$(gettext 'Start the program again')" ; }
 

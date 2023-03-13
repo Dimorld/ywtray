@@ -1,4 +1,6 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
+export TEXTDOMAIN=ywtray
+export OUTPUT_CHARSET=UTF-8
 trap "trap_action" ERR
 set -eou pipefail
 source "/root/ywtray/usr/local/bin/ywtray-functions"
