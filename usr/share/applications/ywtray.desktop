@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=ywtray
+Icon=/root/ywtray/opt/yww-icons/cloudy-2-day.svg
+Comment=Yad Weather Tray: a current weather indicator
+Comment[es]=Yad Weather Tray: un indicador meteorológico actual
+Exec=/usr/local/bin/ywtray
+Terminal=false
+Type=Application
+Categories=X-Utility
