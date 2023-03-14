@@ -14,11 +14,11 @@ msgstr ""
 
 #: /usr/local/bin/ywtray-core:49
 msgid "ywtray - reset"
-msgstr "ywtray - refrescar"
+msgstr "ywtray - reajustar"
 
 #: /usr/local/bin/ywtray-core:52
 msgid "Do you want to reset your ywtray settings?"
-msgstr "¿Desea reiniciar la configuración de ywtray?"
+msgstr "¿Desea reajustar la configuración de ywtray?"
 
 #: /usr/local/bin/ywtray-core:54
 msgid "no"
@@ -30,11 +30,11 @@ msgstr "si"
 
 #: /usr/local/bin/ywtray-core:83
 msgid "ywtray has been successfully reset, start the program again"
-msgstr "ywtray ha sido iniciado exitosamente, corra el programa de nuevo"
+msgstr "ywtray ha iniciado exitosamente, inicie el programa de nuevo"
 
 #: /usr/local/bin/ywtray-core:88
 msgid "Something went wrong, start the program again"
-msgstr "Algo fué mal, inicie el programa de nuevo"
+msgstr "Algo salíó mal, inicie el programa de nuevo"
 
 #: /usr/local/bin/ywtray-core:117 /usr/local/bin/ywtray-core:139
 #: /usr/local/bin/yww-setup:70 /usr/local/bin/yww-setup:92
@@ -75,78 +75,78 @@ msgstr "Cielo despejado"
 
 #: /usr/local/bin/ywtray-functions:95 /usr/local/bin/ywtray-functions:247
 msgid "Mainly clear"
-msgstr ""
+msgstr "Mayormente despejado"
 
 #: /usr/local/bin/ywtray-functions:100 /usr/local/bin/ywtray-functions:252
 msgid "Partly cloudy"
-msgstr ""
+msgstr "Parcialmente nublado"
 
 #: /usr/local/bin/ywtray-functions:105 /usr/local/bin/ywtray-functions:257
 msgid "Overcast"
-msgstr ""
+msgstr "Nublado"
 
 #: /usr/local/bin/ywtray-functions:110 /usr/local/bin/ywtray-functions:262
 msgid "Fog"
-msgstr ""
+msgstr "Neblina"
 
 #: /usr/local/bin/ywtray-functions:115 /usr/local/bin/ywtray-functions:267
 msgid "Rime fog"
-msgstr ""
+msgstr "Helada"
 
 #: /usr/local/bin/ywtray-functions:120 /usr/local/bin/ywtray-functions:272
 msgid "Light drizzle"
-msgstr ""
+msgstr "Llovizna ligera"
 
 #: /usr/local/bin/ywtray-functions:125 /usr/local/bin/ywtray-functions:277
 msgid "Moderate drizzle"
-msgstr ""
+msgstr "Llovizna moderada"
 
 #: /usr/local/bin/ywtray-functions:130 /usr/local/bin/ywtray-functions:282
 msgid "Intense drizzle"
-msgstr ""
+msgstr "Llovizna intensa"
 
 #: /usr/local/bin/ywtray-functions:135 /usr/local/bin/ywtray-functions:287
 msgid "Light freezing drizzle"
-msgstr ""
+msgstr "Llovizna gelida ligera"
 
 #: /usr/local/bin/ywtray-functions:140 /usr/local/bin/ywtray-functions:292
 msgid "Intense freezing drizzle"
-msgstr ""
+msgstr "Llovizna gelida intensa"
 
 #: /usr/local/bin/ywtray-functions:145 /usr/local/bin/ywtray-functions:297
 msgid "Slight rain"
-msgstr ""
+msgstr "LLuvia ligera"
 
 #: /usr/local/bin/ywtray-functions:150 /usr/local/bin/ywtray-functions:302
 msgid "Moderate rain"
-msgstr ""
+msgstr "Lluvia moderada"
 
 #: /usr/local/bin/ywtray-functions:155 /usr/local/bin/ywtray-functions:307
 #, fuzzy
 msgid "Intense rain"
-msgstr "Tormenta de nieve intensa"
+msgstr "Lluvia intensa"
 
 #: /usr/local/bin/ywtray-functions:160 /usr/local/bin/ywtray-functions:312
 msgid "Light freezing rain"
-msgstr ""
+msgstr "Lluvia gelida ligera"
 
 #: /usr/local/bin/ywtray-functions:165 /usr/local/bin/ywtray-functions:317
 msgid "Intense freezing rain"
-msgstr ""
+msgstr "Lluvia gelida intensa"
 
 #: /usr/local/bin/ywtray-functions:170 /usr/local/bin/ywtray-functions:322
 #, fuzzy
 msgid "Slight snow fall"
-msgstr "Tormenta de nieve intensa"
+msgstr "Nevada ligera"
 
 #: /usr/local/bin/ywtray-functions:175 /usr/local/bin/ywtray-functions:327
 #, fuzzy
 msgid "Moderate snow fall"
-msgstr "Tormenta de nieve intensa"
+msgstr "Nevada moderada"
 
 #: /usr/local/bin/ywtray-functions:180 /usr/local/bin/ywtray-functions:332
 msgid "Intense snow fall"
-msgstr "Tormenta de nieve intensa"
+msgstr "Nevada intensa"
 
 #: /usr/local/bin/ywtray-functions:185 /usr/local/bin/ywtray-functions:337
 msgid "Snow grains"
@@ -154,35 +154,35 @@ msgstr "Granos de nieve"
 
 #: /usr/local/bin/ywtray-functions:190 /usr/local/bin/ywtray-functions:342
 msgid "Slight rain showers"
-msgstr ""
+msgstr "Aguaceros ligeros"
 
 #: /usr/local/bin/ywtray-functions:195 /usr/local/bin/ywtray-functions:347
 msgid "Moderate rain showers"
-msgstr ""
+msgstr "Aguaceros moderados"
 
 #: /usr/local/bin/ywtray-functions:200 /usr/local/bin/ywtray-functions:352
 msgid "Intense rain showers"
-msgstr ""
+msgstr "Aguaceros intensos"
 
 #: /usr/local/bin/ywtray-functions:205 /usr/local/bin/ywtray-functions:357
 msgid "Slight snow showers"
-msgstr ""
+msgstr "Periodos de nevada ligera"
 
 #: /usr/local/bin/ywtray-functions:210 /usr/local/bin/ywtray-functions:362
 msgid "Heavy snow showers"
-msgstr ""
+msgstr "Periodos de nevada intensa"
 
 #: /usr/local/bin/ywtray-functions:215 /usr/local/bin/ywtray-functions:367
 msgid "Thunderstorm"
-msgstr ""
+msgstr "Tormenta electrica"
 
 #: /usr/local/bin/ywtray-functions:220 /usr/local/bin/ywtray-functions:372
 msgid "Thunderstorm with slight hail"
-msgstr ""
+msgstr "Tormenta electrica ligera con granizada"
 
 #: /usr/local/bin/ywtray-functions:225 /usr/local/bin/ywtray-functions:377
 msgid "Thunderstorm with heavy hail"
-msgstr ""
+msgstr "Tormenta electrica fuerte con granizada"
 
 #: /usr/local/bin/ywtray-functions:231
 msgid "unknown"
@@ -202,7 +202,7 @@ msgstr "ywtray - ajustes"
 
 #: /usr/local/bin/ywtray-settings:44
 msgid "Type a place, and select your measuring units. Retrieving the latitude and longitude coordinates may take a few seconds"
-msgstr ""
+msgstr "Escriba un lugar y seleccione sus unidades de medida. La busqueda de la latitud y longitud puede tardar unos segundos"
 
 #: /usr/local/bin/ywtray-settings:49
 msgid "Location:CE"
@@ -210,7 +210,7 @@ msgstr "Ubicación:CE"
 
 #: /usr/local/bin/ywtray-settings:50
 msgid "Temperature Unit:CB"
-msgstr "Unidad de emperatura:CB"
+msgstr "Unidad de Temperatura:CB"
 
 #: /usr/local/bin/ywtray-settings:51
 msgid "Wind Speed Unit:CB"
@@ -222,11 +222,11 @@ msgstr "ywtray - Selección de lugar"
 
 #: /usr/local/bin/ywtray-settings:85
 msgid "Choose the nearest place to your location\\nIf no coordinates are found click Cancel and try a different place"
-msgstr "Elije el lugar mas cercano a ti.\\nSi no se encuentran coordenadas haga clic en cancelar y pruebe un lugar diferente"
+msgstr "Elija el lugar mas cercano.\\nSi no se encuentran coordenadas haga clic en Cancelar e intente un lugar distinto"
 
 #: /usr/local/bin/ywtray-settings:91
 msgid "No coordinates found, try again"
-msgstr "No se encontraron coordenadas, trate de nuevo"
+msgstr "No se encontraron las coordenadas, intente de nuevo"
 
 #: /usr/local/bin/ywtray-start:8 /usr/local/bin/ywtray-start:37
 #: /usr/local/bin/ywtray:8 /usr/local/bin/ywtray:37
