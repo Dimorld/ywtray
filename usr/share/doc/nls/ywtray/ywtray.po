@@ -1,82 +1,77 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: ywtray-core VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-13 18:20-0600\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2023-03-13 18:28-0600\n"
+"PO-Revision-Date: 2023-03-13 18:27-0600\n"
+"Last-Translator: nilsonmorales <copymanuals2@gmail.com>\n"
+"Language-Team: none\n"
+"Language: es_SV\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: /usr/local/bin/ywtray-core:49
 msgid "ywtray - reset"
-msgstr ""
+msgstr "ywtray - refrescar"
 
 #: /usr/local/bin/ywtray-core:52
 msgid "Do you want to reset your ywtray settings?"
-msgstr ""
+msgstr "¿Desea reiniciar la configuración de ywtray?"
 
 #: /usr/local/bin/ywtray-core:54
 msgid "no"
-msgstr ""
+msgstr "no"
 
 #: /usr/local/bin/ywtray-core:55
 msgid "yes"
-msgstr ""
+msgstr "si"
 
 #: /usr/local/bin/ywtray-core:83
 msgid "ywtray has been successfully reset, start the program again"
-msgstr ""
+msgstr "ywtray ha sido iniciado exitosamente, corra el programa de nuevo"
 
 #: /usr/local/bin/ywtray-core:88
 msgid "Something went wrong, start the program again"
-msgstr ""
+msgstr "Algo fué mal, inicie el programa de nuevo"
 
 #: /usr/local/bin/ywtray-core:117 /usr/local/bin/ywtray-core:139
 #: /usr/local/bin/yww-setup:70 /usr/local/bin/yww-setup:92
 msgid "Place:"
-msgstr ""
+msgstr "Lugar:"
 
 #: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
 msgid "\\nTemperature:"
-msgstr ""
+msgstr "\\nTemperatura:"
 
 #: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
 msgid "\\nWind"
-msgstr ""
+msgstr "\\nViento"
 
 #: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
 msgid "Speed:"
-msgstr ""
+msgstr "Velocidad:"
 
 #: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
 msgid "Direction:"
-msgstr ""
+msgstr "Dirección:"
 
 #: /usr/local/bin/ywtray-core:139 /usr/local/bin/yww-setup:92
 msgid "Temperature:"
-msgstr ""
+msgstr "Temperatura:"
 
 #: /usr/local/bin/ywtray-core:139
 msgid "Wind Speed:"
-msgstr ""
+msgstr "Velocidad del viento:"
 
 #: /usr/local/bin/ywtray-core:139
 msgid "Wind Direction:"
-msgstr ""
+msgstr "Dirección del viento:"
 
 #: /usr/local/bin/ywtray-functions:90 /usr/local/bin/ywtray-functions:242
 msgid "Clear sky"
-msgstr ""
+msgstr "Cielo despejado"
 
 #: /usr/local/bin/ywtray-functions:95 /usr/local/bin/ywtray-functions:247
 msgid "Mainly clear"
@@ -127,8 +122,9 @@ msgid "Moderate rain"
 msgstr ""
 
 #: /usr/local/bin/ywtray-functions:155 /usr/local/bin/ywtray-functions:307
+#, fuzzy
 msgid "Intense rain"
-msgstr ""
+msgstr "Tormenta de nieve intensa"
 
 #: /usr/local/bin/ywtray-functions:160 /usr/local/bin/ywtray-functions:312
 msgid "Light freezing rain"
@@ -139,20 +135,22 @@ msgid "Intense freezing rain"
 msgstr ""
 
 #: /usr/local/bin/ywtray-functions:170 /usr/local/bin/ywtray-functions:322
+#, fuzzy
 msgid "Slight snow fall"
-msgstr ""
+msgstr "Tormenta de nieve intensa"
 
 #: /usr/local/bin/ywtray-functions:175 /usr/local/bin/ywtray-functions:327
+#, fuzzy
 msgid "Moderate snow fall"
-msgstr ""
+msgstr "Tormenta de nieve intensa"
 
 #: /usr/local/bin/ywtray-functions:180 /usr/local/bin/ywtray-functions:332
 msgid "Intense snow fall"
-msgstr ""
+msgstr "Tormenta de nieve intensa"
 
 #: /usr/local/bin/ywtray-functions:185 /usr/local/bin/ywtray-functions:337
 msgid "Snow grains"
-msgstr ""
+msgstr "Granos de nieve"
 
 #: /usr/local/bin/ywtray-functions:190 /usr/local/bin/ywtray-functions:342
 msgid "Slight rain showers"
@@ -188,19 +186,19 @@ msgstr ""
 
 #: /usr/local/bin/ywtray-functions:231
 msgid "unknown"
-msgstr ""
+msgstr "desconocido"
 
 #: /usr/local/bin/ywtray-functions:383
 msgid "unavailable"
-msgstr ""
+msgstr "no disponible"
 
 #: /usr/local/bin/ywtray-functions:409
 msgid "knots"
-msgstr ""
+msgstr "nudos"
 
 #: /usr/local/bin/ywtray-settings:41
 msgid "ywtray - settings"
-msgstr ""
+msgstr "ywtray - ajustes"
 
 #: /usr/local/bin/ywtray-settings:44
 msgid "Type a place, and select your measuring units. Retrieving the latitude and longitude coordinates may take a few seconds"
@@ -208,33 +206,33 @@ msgstr ""
 
 #: /usr/local/bin/ywtray-settings:49
 msgid "Location:CE"
-msgstr ""
+msgstr "Ubicación:CE"
 
 #: /usr/local/bin/ywtray-settings:50
 msgid "Temperature Unit:CB"
-msgstr ""
+msgstr "Unidad de emperatura:CB"
 
 #: /usr/local/bin/ywtray-settings:51
 msgid "Wind Speed Unit:CB"
-msgstr ""
+msgstr "Velocidad del viento:CB"
 
 #: /usr/local/bin/ywtray-settings:75
 msgid "ywtray - location selection"
-msgstr ""
+msgstr "ywtray - Selección de lugar"
 
 #: /usr/local/bin/ywtray-settings:85
 msgid "Choose the nearest place to your location\\nIf no coordinates are found click Cancel and try a different place"
-msgstr ""
+msgstr "Elije el lugar mas cercano a ti.\\nSi no se encuentran coordenadas haga clic en cancelar y pruebe un lugar diferente"
 
 #: /usr/local/bin/ywtray-settings:91
 msgid "No coordinates found, try again"
-msgstr ""
+msgstr "No se encontraron coordenadas, trate de nuevo"
 
 #: /usr/local/bin/ywtray-start:8 /usr/local/bin/ywtray-start:37
 #: /usr/local/bin/ywtray:8 /usr/local/bin/ywtray:37
 msgid "Start the program again"
-msgstr ""
+msgstr "Inicie el programa de nuevo"
 
 #: /usr/local/bin/yww-setup:92
 msgid "Wind"
-msgstr ""
+msgstr "Viento"
