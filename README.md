@@ -20,7 +20,7 @@ The important scripts are:
 
 **ywtray-core** is in charge of showing the notification in the tray. It updates the weather icon, and weather conditions every 27 minutes. The weather data is retrieved from [open meteo](https://open-meteo.com/en/docs "open-meteo.com") to then be parsed into useful information utilizing the **ywtray-functions** file. 
 
-**ywtray-functions** is a text file, it contains a function to parse the json data stream provided by the weather api, a function to parse the latitude and longitude coordinates, code to select the appropiate current weather icon and current weather conditions, code to select the appropiate temperature suffix, and code to select the appropiate wind speed suffix.
+**ywtray-functions** is a text file, It contains a function to parse the json data stream provided by the weather API, a function to parse the latitude and longitude coordinates, code to select the appropiate current weather icon and current weather conditions, code to select the appropiate temperature suffix, and code to select the appropiate wind speed suffix.
 
 THINGS TO CONSIDER
 ===============
