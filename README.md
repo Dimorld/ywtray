@@ -14,13 +14,13 @@ The importante scripts are:
 
 * ywtray
 * ywtray-core
-* ywtray-functions
 * ywtray-settings
 
 **ywtray** is a launcher script, It takes decisions based in the configuration file located in **.config/ywtray/ywtray.conf**, if it is the first time YWTRAY is run, then **ywtray-settings** is started and will ask for a location, and prefferred measuring units. Once the questions are answered, the responses are stored in **ywtray.conf**, and **ywtray-core** started.   
 
-**ywtray-core** is the script in charge of showing the notification in your tray. It updates the weather icon, and weather conditions every 27 minutes. 
+**ywtray-core** is the script in charge of showing the notification in your tray. It updates the weather icon, and weather conditions every 27 minutes. The weather data is obtained from [open meteo](https://open-meteo.com/en/docs "open-meteo.com") to then be parsed into useful information using the **ywtray-functions** file. 
 
+**ywtray-functions** is a text file, it contains a function to parse the json data stream provided by the weather api, a function to parse the latitude and longitude coordinates, code to select the appropiate current weather icon and conditions, code to select the appropiate temperature suffix, and code to select the appropiate wind speed suffix.  
 
 
 Notificador del clima escrito en yad
