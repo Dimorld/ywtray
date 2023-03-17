@@ -18,7 +18,7 @@ The important scripts are:
 
 **ywtray** is a launcher script, It takes decisions depending on what is found in the configuration file located on **.config/ywtray/ywtray.conf**. If It is the first time YWTRAY is run, then **ywtray-settings** is executed and It will ask for a location, a temperature measuring unit, and a wind speed measuring unit. Once the questions are answered, the latitude and longitude coordinates are retrieved from [Free Geocoding API](https://geocode.maps.co/ "Free Geocoding API"), then the information is writen to the file  **ywtray.conf**, and the script **ywtray-core** is executed.   
 
-**ywtray-core** is in charge of showing the notification in the tray. It updates the weather icon, and weather conditions every 27 minutes. The weather data is retrieved from [open meteo](https://open-meteo.com/en/docs "open-meteo.com") to then be parsed into useful information utilizing the **ywtray-functions** file. 
+**ywtray-core** is in charge of showing the notification on the tray. It updates the weather icon, and weather condition text every 27 minutes. The weather data is retrieved from [open meteo](https://open-meteo.com/en/docs "open-meteo.com") to then be parsed into useful information utilizing the **ywtray-functions** file. 
 
 **ywtray-functions** is a text file, It contains a function to parse the json data stream provided by the weather API, a function to parse the latitude and longitude coordinates, code to select the appropiate current weather icon and current weather conditions, code to select the appropiate temperature suffix, and code to select the appropiate wind speed suffix.
 
