@@ -8,6 +8,20 @@ DETAILS
 The package/directory consists of the following:
 
 
+![Alt text](/read_assets/structure01-20230317_42.png.png?raw=true "Directory Main Structure")
+
+The importante scripts are:
+
+* ywtray
+* ywtray-core
+* ywtray-functions
+* ywtray-settings
+
+**ywtray** is a launcher script, It takes decisions based in the configuration file located in **.config/ywtray/ywtray.conf**, if it is the first time YWTRAY is run, then **ywtray-settings** is started and will ask for a location, and prefferred measuring units. Once the questions are answered, the responses are stored in **ywtray.conf**, and **ywtray-core** started.   
+
+**ywtray-core** is the script in charge of showing the notification in your tray. It updates the weather icon, and weather conditions every 27 minutes. 
+
+
 
 Notificador del clima escrito en yad
 
