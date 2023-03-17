@@ -98,11 +98,14 @@ case "$(printf -- "%s" "${location_and_units[2]}" | cut -d. -f 1)" in
 esac
 printf -- "windspeed_unit=\"%s\"\n" "${windspeed_unit}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
+
 set_temperature_suffix
 printf -- "temperature_suffix=\"%s\"\n" "${temperature_suffix}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
+
 set_wind_suffix
 printf -- "wind_speed_suffix=\"%s\"\n" "${wind_speed_suffix}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
 
 IFS="${oldifs}"
 # REQUEST lat log of a place to https://geocode.maps.co

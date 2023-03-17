@@ -136,7 +136,7 @@ pid_tray=$!
 while true ; do
 
 
-    sleep 5s
+    sleep 27m
     
     weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}\
 &longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}\
