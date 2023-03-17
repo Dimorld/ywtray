@@ -1,5 +1,13 @@
 YWTRAY     🌦
 =============
+YWTRAY is a simple current weather indicator. It was written using GNU bash 5.0.17, and YAD 12.3 on a system with PuppyLinux FossaPup64 9.5 . It uses curl 7.68.0, and GNU Awk 5.2.0. 
+It is a project initiated as a way to learn bash, expect unefficient solutions to problems.
+
+DETAILS
+======
+The package/directory consists of the following:
+
+
 
 Notificador del clima escrito en yad
 
