@@ -25,9 +25,9 @@ The important scripts are:
 THINGS TO CONSIDER
 ===============
 
-* The meteo API states weather data is updated every hour on the top of the hour, a user can have up to 10,000 calls to the api per 24 hrs cycle, and is free for non commercial use. If you have privacy concerns read their website.
+* The meteo API states weather data is updated every hour on the top of the hour, a user can have up to 10,000 calls to the api per 24 hrs cycle, and is free for non commercial use. If You have privacy concerns read their website.
 * YAD updates information to the tray via a named pipe, the named pipe is created in /tmp and file descriptor 6 is used, inspired in [yad wiki example](https://github.com/v1cont/yad/wiki/Frontend-for-find(1) "yad wiki example")
-* The geolocation API is free to use, again if you have privacy concerns read their website.
+* The geolocation API is free to use, again if You have privacy concerns read their website.
 
 Notificador del clima escrito en yad
 
