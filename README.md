@@ -10,7 +10,7 @@ The package/directory consists of the following:
 
 ![Alt text](/read_assets/structure01-20230317_42.png.png?raw=true "Directory Main Structure")
 
-The importante scripts are:
+The important scripts are:
 
 * ywtray
 * ywtray-core
