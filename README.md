@@ -1,6 +1,6 @@
 YWTRAY     🌦
 =============
-YWTRAY is a simple current weather indicator. It was written using GNU bash 5.0.17, and YAD 12.3 on a system with PuppyLinux FossaPup64 9.5 . It uses curl 7.68.0, and GNU Awk 5.2.0. 
+YWTRAY is a simple current weather indicator. It was written using GNU bash 5.0.17, and YAD 12.3 on a system with PuppyLinux FossaPup64 9.5. It uses curl 7.68.0, and GNU Awk 5.2.0. 
 It is a project initiated as a way to learn bash, expect unefficient solutions to problems.
 
 DETAILS
@@ -16,7 +16,7 @@ The important scripts are:
 * ywtray-core
 * ywtray-settings
 
-**ywtray** is a launcher script, It takes decisions depending on what is found in the configuration file located on **.config/ywtray/ywtray.conf**. If it is the first time YWTRAY is run, then **ywtray-settings** is executed and It will ask for a location, a temperature measuring unit, and a wind speed measuring unit. Once the questions are answered, the latitude and longitude coordinates are retrieved from [Free Geocoding API](https://geocode.maps.co/ "Free Geocoding API"), then, the information is writen to the file  **ywtray.conf**, and the script **ywtray-core** is executed.   
+**ywtray** is a launcher script, It takes decisions depending on what is found in the configuration file located on **.config/ywtray/ywtray.conf**. If It is the first time YWTRAY is run, then **ywtray-settings** is executed and It will ask for a location, a temperature measuring unit, and a wind speed measuring unit. Once the questions are answered, the latitude and longitude coordinates are retrieved from [Free Geocoding API](https://geocode.maps.co/ "Free Geocoding API"), then the information is writen to the file  **ywtray.conf**, and the script **ywtray-core** is executed.   
 
 **ywtray-core** is in charge of showing the notification in the tray. It updates the weather icon, and weather conditions every 27 minutes. The weather data is retrieved from [open meteo](https://open-meteo.com/en/docs "open-meteo.com") to then be parsed into useful information utilizing the **ywtray-functions** file. 
 
