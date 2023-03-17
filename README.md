@@ -22,8 +22,12 @@ The importante scripts are:
 
 **ywtray-functions** is a text file, it contains a function to parse the json data stream provided by the weather api, a function to parse the latitude and longitude coordinates, code to select the appropiate current weather icon and current weather conditions, code to select the appropiate temperature suffix, and code to select the appropiate wind speed suffix.
 
+THINGS TO CONSIDER
+===============
 
-
+* The meteo api states weather data is updated every hour on the top of the hour, a user can have up to 10,000 calls to the api per 24 hrs cycle, and is free for non commercial use.
+* YAD updates information to the tray via a named pipe, the named pipe is created in /tmp and file descriptor 6 is used, inspired in [yad wiki example](https://github.com/v1cont/yad/wiki/Frontend-for-find(1) "yad wiki example")
+* No 
 
 Notificador del clima escrito en yad
 
