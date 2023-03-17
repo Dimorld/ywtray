@@ -3,238 +3,314 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-13 18:20-0600\n"
+"POT-Creation-Date: 2023-03-15 01:24-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /usr/local/bin/ywtray-core:49
+#: ywtray-core:48 /usr/local/bin/ywtray-core:49
 msgid "ywtray - reset"
 msgstr ""
 
-#: /usr/local/bin/ywtray-core:52
+#: ywtray-core:51 /usr/local/bin/ywtray-core:52
 msgid "Do you want to reset your ywtray settings?"
 msgstr ""
 
-#: /usr/local/bin/ywtray-core:54
+#: ywtray-core:53 /usr/local/bin/ywtray-core:54
 msgid "no"
 msgstr ""
 
-#: /usr/local/bin/ywtray-core:55
+#: ywtray-core:54 /usr/local/bin/ywtray-core:55
 msgid "yes"
 msgstr ""
 
-#: /usr/local/bin/ywtray-core:83
+msgid "Cancel"
+msgstr ""
+
+#: ywtray-core:82 /usr/local/bin/ywtray-core:83
 msgid "ywtray has been successfully reset, start the program again"
 msgstr ""
 
-#: /usr/local/bin/ywtray-core:88
+#: ywtray-core:87 /usr/local/bin/ywtray-core:88
 msgid "Something went wrong, start the program again"
 msgstr ""
 
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/ywtray-core:139
-#: /usr/local/bin/yww-setup:70 /usr/local/bin/yww-setup:92
+#: ywtray-core:116
+msgid "Place: "
+msgstr ""
+
+#: ywtray-core:116
+msgid "Temperature: "
+msgstr ""
+
+#: ywtray-core:116
+msgid "Wind Speed: "
+msgstr ""
+
+#: ywtray-core:116
+msgid "Wind Direction: "
+msgstr ""
+
+#: ywtray-core:138 /usr/local/bin/ywtray-core:117
+#: /usr/local/bin/ywtray-core:139
+#: /usr/local/bin/yww-setup:92
 msgid "Place:"
 msgstr ""
 
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
-msgid "\\nTemperature:"
-msgstr ""
-
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
-msgid "\\nWind"
-msgstr ""
-
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
-msgid "Speed:"
-msgstr ""
-
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
-msgid "Direction:"
-msgstr ""
-
-#: /usr/local/bin/ywtray-core:139 /usr/local/bin/yww-setup:92
-msgid "Temperature:"
-msgstr ""
-
-#: /usr/local/bin/ywtray-core:139
+#: ywtray-core:138 /usr/local/bin/ywtray-core:139
 msgid "Wind Speed:"
 msgstr ""
 
-#: /usr/local/bin/ywtray-core:139
+#: ywtray-core:138 /usr/local/bin/ywtray-core:139
 msgid "Wind Direction:"
 msgstr ""
 
-#: /usr/local/bin/ywtray-functions:90 /usr/local/bin/ywtray-functions:242
+#: ywtray-functions:88 ywtray-functions:240 /usr/local/bin/ywtray-functions:90
+#: /usr/local/bin/ywtray-functions:242
 msgid "Clear sky"
 msgstr ""
 
-#: /usr/local/bin/ywtray-functions:95 /usr/local/bin/ywtray-functions:247
+#: ywtray-functions:93 ywtray-functions:245 /usr/local/bin/ywtray-functions:95
+#: /usr/local/bin/ywtray-functions:247
 msgid "Mainly clear"
 msgstr ""
 
-#: /usr/local/bin/ywtray-functions:100 /usr/local/bin/ywtray-functions:252
+#: ywtray-functions:98 ywtray-functions:250 /usr/local/bin/ywtray-functions:100
+#: /usr/local/bin/ywtray-functions:252
 msgid "Partly cloudy"
 msgstr ""
 
+#: ywtray-functions:103 ywtray-functions:255
 #: /usr/local/bin/ywtray-functions:105 /usr/local/bin/ywtray-functions:257
 msgid "Overcast"
 msgstr ""
 
+#: ywtray-functions:108 ywtray-functions:260
 #: /usr/local/bin/ywtray-functions:110 /usr/local/bin/ywtray-functions:262
 msgid "Fog"
 msgstr ""
 
+#: ywtray-functions:113 ywtray-functions:265
 #: /usr/local/bin/ywtray-functions:115 /usr/local/bin/ywtray-functions:267
 msgid "Rime fog"
 msgstr ""
 
+#: ywtray-functions:118 ywtray-functions:270
 #: /usr/local/bin/ywtray-functions:120 /usr/local/bin/ywtray-functions:272
 msgid "Light drizzle"
 msgstr ""
 
+#: ywtray-functions:123 ywtray-functions:275
 #: /usr/local/bin/ywtray-functions:125 /usr/local/bin/ywtray-functions:277
 msgid "Moderate drizzle"
 msgstr ""
 
+#: ywtray-functions:128 ywtray-functions:280
 #: /usr/local/bin/ywtray-functions:130 /usr/local/bin/ywtray-functions:282
 msgid "Intense drizzle"
 msgstr ""
 
+#: ywtray-functions:133 ywtray-functions:285
 #: /usr/local/bin/ywtray-functions:135 /usr/local/bin/ywtray-functions:287
 msgid "Light freezing drizzle"
 msgstr ""
 
+#: ywtray-functions:138 ywtray-functions:290
 #: /usr/local/bin/ywtray-functions:140 /usr/local/bin/ywtray-functions:292
 msgid "Intense freezing drizzle"
 msgstr ""
 
+#: ywtray-functions:143 ywtray-functions:295
 #: /usr/local/bin/ywtray-functions:145 /usr/local/bin/ywtray-functions:297
 msgid "Slight rain"
 msgstr ""
 
+#: ywtray-functions:148 ywtray-functions:300
 #: /usr/local/bin/ywtray-functions:150 /usr/local/bin/ywtray-functions:302
 msgid "Moderate rain"
 msgstr ""
 
+#: ywtray-functions:153 ywtray-functions:305
 #: /usr/local/bin/ywtray-functions:155 /usr/local/bin/ywtray-functions:307
 msgid "Intense rain"
 msgstr ""
 
+#: ywtray-functions:158 ywtray-functions:310
 #: /usr/local/bin/ywtray-functions:160 /usr/local/bin/ywtray-functions:312
 msgid "Light freezing rain"
 msgstr ""
 
+#: ywtray-functions:163 ywtray-functions:315
 #: /usr/local/bin/ywtray-functions:165 /usr/local/bin/ywtray-functions:317
 msgid "Intense freezing rain"
 msgstr ""
 
+#: ywtray-functions:168 ywtray-functions:320
 #: /usr/local/bin/ywtray-functions:170 /usr/local/bin/ywtray-functions:322
 msgid "Slight snow fall"
 msgstr ""
 
+#: ywtray-functions:173 ywtray-functions:325
 #: /usr/local/bin/ywtray-functions:175 /usr/local/bin/ywtray-functions:327
 msgid "Moderate snow fall"
 msgstr ""
 
+#: ywtray-functions:178 ywtray-functions:330
 #: /usr/local/bin/ywtray-functions:180 /usr/local/bin/ywtray-functions:332
 msgid "Intense snow fall"
 msgstr ""
 
+#: ywtray-functions:183 ywtray-functions:335
 #: /usr/local/bin/ywtray-functions:185 /usr/local/bin/ywtray-functions:337
 msgid "Snow grains"
 msgstr ""
 
+#: ywtray-functions:188 ywtray-functions:340
 #: /usr/local/bin/ywtray-functions:190 /usr/local/bin/ywtray-functions:342
 msgid "Slight rain showers"
 msgstr ""
 
+#: ywtray-functions:193 ywtray-functions:345
 #: /usr/local/bin/ywtray-functions:195 /usr/local/bin/ywtray-functions:347
 msgid "Moderate rain showers"
 msgstr ""
 
+#: ywtray-functions:198 ywtray-functions:350
 #: /usr/local/bin/ywtray-functions:200 /usr/local/bin/ywtray-functions:352
 msgid "Intense rain showers"
 msgstr ""
 
+#: ywtray-functions:203 ywtray-functions:355
 #: /usr/local/bin/ywtray-functions:205 /usr/local/bin/ywtray-functions:357
 msgid "Slight snow showers"
 msgstr ""
 
+#: ywtray-functions:208 ywtray-functions:360
 #: /usr/local/bin/ywtray-functions:210 /usr/local/bin/ywtray-functions:362
 msgid "Heavy snow showers"
 msgstr ""
 
+#: ywtray-functions:213 ywtray-functions:365
 #: /usr/local/bin/ywtray-functions:215 /usr/local/bin/ywtray-functions:367
 msgid "Thunderstorm"
 msgstr ""
 
+#: ywtray-functions:218 ywtray-functions:370
 #: /usr/local/bin/ywtray-functions:220 /usr/local/bin/ywtray-functions:372
 msgid "Thunderstorm with slight hail"
 msgstr ""
 
+#: ywtray-functions:223 ywtray-functions:375
 #: /usr/local/bin/ywtray-functions:225 /usr/local/bin/ywtray-functions:377
 msgid "Thunderstorm with heavy hail"
 msgstr ""
 
-#: /usr/local/bin/ywtray-functions:231
+#: ywtray-functions:229 /usr/local/bin/ywtray-functions:231
 msgid "unknown"
 msgstr ""
 
-#: /usr/local/bin/ywtray-functions:383
+#: ywtray-functions:381 /usr/local/bin/ywtray-functions:383
 msgid "unavailable"
 msgstr ""
 
-#: /usr/local/bin/ywtray-functions:409
-msgid "knots"
-msgstr ""
-
-#: /usr/local/bin/ywtray-settings:41
+#: ywtray-settings:41 /usr/local/bin/ywtray-settings:41
 msgid "ywtray - settings"
 msgstr ""
 
-#: /usr/local/bin/ywtray-settings:44
-msgid "Type a place, and select your measuring units. Retrieving the latitude and longitude coordinates may take a few seconds"
+#: ywtray-settings:44 /usr/local/bin/ywtray-settings:44
+msgid ""
+"Type a place, and select your measuring units. Retrieving the latitude and "
+"longitude coordinates may take a few seconds"
 msgstr ""
 
-#: /usr/local/bin/ywtray-settings:49
+#: ywtray-settings:49 /usr/local/bin/ywtray-settings:49
 msgid "Location:CE"
 msgstr ""
 
-#: /usr/local/bin/ywtray-settings:50
+#: ywtray-settings:50 /usr/local/bin/ywtray-settings:50
 msgid "Temperature Unit:CB"
 msgstr ""
 
-#: /usr/local/bin/ywtray-settings:51
+#: ywtray-settings:51 /usr/local/bin/ywtray-settings:51
 msgid "Wind Speed Unit:CB"
 msgstr ""
 
-#: /usr/local/bin/ywtray-settings:75
+#: ywtray-settings:75 /usr/local/bin/ywtray-settings:75
 msgid "ywtray - location selection"
 msgstr ""
 
-#: /usr/local/bin/ywtray-settings:85
-msgid "Choose the nearest place to your location\\nIf no coordinates are found click Cancel and try a different place"
+#: ywtray-settings:85 /usr/local/bin/ywtray-settings:85
+msgid ""
+"Choose the nearest place to your location\\nIf no coordinates are found "
+"click Cancel and try a different place"
 msgstr ""
 
-#: /usr/local/bin/ywtray-settings:91
+#: ywtray-settings:91 /usr/local/bin/ywtray-settings:91
 msgid "No coordinates found, try again"
 msgstr ""
 
-#: /usr/local/bin/ywtray-start:8 /usr/local/bin/ywtray-start:37
-#: /usr/local/bin/ywtray:8 /usr/local/bin/ywtray:37
+#: ywtray:8 ywtray:40 /usr/local/bin/ywtray-start:8
+#: /usr/local/bin/ywtray-start:37 /usr/local/bin/ywtray:8
+#: /usr/local/bin/ywtray:37
 msgid "Start the program again"
 msgstr ""
 
-#: /usr/local/bin/yww-setup:92
-msgid "Wind"
+#: ywtray-core:117
+msgid "Quit"
+msgstr ""
+
+#: ywtray-core:117
+msgid "Reset"
+msgstr ""
+
+#: ywtray-functions:395
+msgid "km/h"
+msgstr ""
+
+#: ywtray-functions:399
+msgid "m/s"
+msgstr ""
+
+#: ywtray-functions:403 ywtray-settings:52
+msgid "mph"
+msgstr ""
+
+#: ywtray-functions:407
+msgid "knots"
+msgstr ""
+
+#: ywtray-functions:423
+msgid "°C"
+msgstr ""
+
+#: ywtray-functions:427
+msgid "°F"
+msgstr ""
+
+#: ywtray-settings:52
+msgid "celsius"
+msgstr ""
+
+#: ywtray-settings:52
+msgid "fahrenheit"
+msgstr ""
+
+#: ywtray-settings:52
+msgid "kmh"
+msgstr ""
+
+#: ywtray-settings:52
+msgid "ms"
+msgstr ""
+
+#: ywtray-settings:52
+msgid "kn"
 msgstr ""

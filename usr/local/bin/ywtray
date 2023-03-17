@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 trap 's=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR
 set -euo pipefail
-#set -x
 export TEXTDOMAIN=ywtray
 export OUTPUT_CHARSET=UTF-8
 source "/root/ywtray/.config/ywtray/ywtray.conf" || \
-{ mkdir "/root/ywtray/.config/ywtray" ; touch "/root/ywtray/.config/ywtray/ywtray.conf" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; yad --splash --skip-taskbar --on-top --undecorated button='yad-ok:0' --center --text="$(gettext 'Start the program again')" ; exit 0 ; }
-set -x
+{ mkdir "/root/ywtray/.config/ywtray" ; touch "/root/ywtray/.config/ywtray/ywtray.conf" ; \
+    printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; \
+    yad --splash --skip-taskbar --image="gtk-info" --on-top --undecorated \
+    --button=$(gettext OK)!gtk-ok:0 --center --text="$(gettext 'Start the program again')" ; exit 0 ; }
+
 case "${first_run}"  in
     
     false)
@@ -37,9 +39,9 @@ case "${first_run}"  in
             printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf"
         fi
         
-        yad --splash --skip-taskbar --on-top --undecorated --button='yad-ok:0' --center --text="$(gettext 'Start the program again')"
+        yad --splash --skip-taskbar --image="gtk-info" --on-top --undecorated --button=$(gettext OK)!gtk-ok:0 --center --text="$(gettext 'Start the program again')"
         
         ;;
 esac
-set +x
+
 exit 0

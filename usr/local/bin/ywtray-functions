@@ -388,27 +388,27 @@ fi
 }
 
 function set_wind_suffix (){
-
+set -x
          case "${windspeed_unit}" in
          
          kmh)
-            wind_speed_suffix="km/h"
+            wind_speed_suffix="$(gettext 'km/h')"
             ;;
 
          ms)
-            wind_speed_suffix="m/s"
+            wind_speed_suffix="$(gettext 'm/s')"
             ;;
         
          mph)
-            wind_speed_suffix="mph"
+            wind_speed_suffix="$(gettext mph)"
             ;;
         
          kn)
-            wind_speed_suffix="$(gettext 'knots')"
+            wind_speed_suffix="$(gettext knots)"
             ;;
 
          *)
-            wind_speed_suffix="unavailable"
+            wind_speed_suffix="$(gettext unavailable)"
             ;;
     
         esac   
@@ -416,17 +416,18 @@ function set_wind_suffix (){
 }
 
 function set_temperature_suffix (){
-
+set -x
         case "${temp_unit}" in
+        
         celsius)
-            temperature_suffix="°C"
+            temperature_suffix="$(gettext °C)"
             ;;
         
         fahrenheit) 
-            temperature_suffix="°F"
+            temperature_suffix="$(gettext °F)"
             ;;
         *)
-            temperature_suffix="unknown"
+            temperature_suffix="$(gettext unknown)"
             ;;
     
         esac

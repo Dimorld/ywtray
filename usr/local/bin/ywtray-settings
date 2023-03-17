@@ -3,7 +3,7 @@ export TEXTDOMAIN=ywtray
 export OUTPUT_CHARSET=UTF-8
 trap "trap_action" ERR
 set -eou pipefail
-set -x
+#set -x
 source "/root/ywtray/usr/local/bin/ywtray-functions"
 # VARIABLES 
 location=''                   # Town, Country OR State      needed by https://geocode.maps.co
@@ -19,11 +19,11 @@ timeformat='iso8601'          #                             needed by https://ap
 timezone='auto'               # needed by https://api.open-meteo.com/v1/forecast
 wicon=''                      # weather icon indicator name
 wtext=''                      # current weather text description as privided by open-meteo.com
-icons_dir="/root/ywtray/opt/yww-icons"    # weather icons location
+icons_dir="/root/ywtray/opt/ywtray-icons"    # weather icons location
 #epoch_time                   # used in function weather_icon_descriptor, a local variable declared
 temperature_suffix=''         # suffix F or C to be written in the tooltip
 wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
-pid_tray=''                   # process id of the yad dialog icon notifier
+#pid_tray=''                   # process id of the yad dialog icon notifier
 
 
 function trap_action (){
@@ -46,26 +46,64 @@ location_and_units=($(yad \
 --height=220 \
 --window-icon="${icons_dir}"/cloudy-1-day.svg \
 --form \
+--button="$(gettext "Cancel")!cancel:1" --button="$(gettext OK)!ok:0" \
 --field="$(gettext 'Location:CE')" \
 --field="$(gettext 'Temperature Unit:CB')" \
---field="$(gettext 'Wind Speed Unit:CB')" '' '^celsius!fahrenheit' '^kmh!ms!mph!kn'))
+--field="$(gettext 'Wind Speed Unit:CB')" '' "^1. $(gettext celsius)!2. $(gettext fahrenheit)" "^1. $(gettext kmh)!2. $(gettext ms)!3. $(gettext mph)!4. $(gettext kn)"))
  
+
+
 location="${location_and_units[0]}"
 printf -- "location=\"%s\"\n" "${location_and_units[0]}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
 
-temp_unit="${location_and_units[1]}"
-printf -- "temp_unit=\"%s\"\n" "${location_and_units[1]}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
-windspeed_unit="${location_and_units[2]}"
-printf -- "windspeed_unit=\"%s\"\n" "${location_and_units[2]}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
+if [[ "$(printf -- "%s" "${location_and_units[1]}" | cut -d. -f 1)" = "1" ]] ; then
+    
+    temp_unit="celsius"
+
+elif [[ "$(printf -- "%s" "${location_and_units[1]}" | cut -d. -f 1)" = "2" ]]; then
+    
+    temp_unit="fahrenheit"
+
+fi
+printf -- "temp_unit=\"%s\"\n" "${temp_unit}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
+
+
+
+case "$(printf -- "%s" "${location_and_units[2]}" | cut -d. -f 1)" in 
+
+    1)
+        windspeed_unit="kmh"
+        ;;
+    
+    2)
+        windspeed_unit="ms"
+        ;;
+        
+    3)
+        windspeed_unit="mph"
+        ;;
+    
+    4)
+        windspeed_unit="kn"
+        ;;
+    
+    *)
+        exit 5
+        ;;
+
+esac
+printf -- "windspeed_unit=\"%s\"\n" "${windspeed_unit}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
 set_temperature_suffix
 printf -- "temperature_suffix=\"%s\"\n" "${temperature_suffix}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
 
 set_wind_suffix
 printf -- "wind_speed_suffix=\"%s\"\n" "${wind_speed_suffix}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
 IFS="${oldifs}"
 # REQUEST lat log of a place to https://geocode.maps.co
 
@@ -80,17 +118,19 @@ request_lat_lon=($(curl -s -k "https://geocode.maps.co/search?q=${location}" | \
      --height="340" \
      --text-align="left" \
      --buttons-layout="end" \
-     --button="yad-cancel:0" --button="yad-ok:0"  \
+     --button="$(gettext "Cancel")!cancel:0" --button="yad-ok:0"  \
      --escape-ok \
-     --text="$(gettext 'Choose the nearest place to your location\nIf no coordinates are found click Cancel and try a different place')" \
+     --text="$(gettext "Choose the nearest place to your location\nIf no coordinates are found click Cancel and try a different place")" \
      --window-icon="${icons_dir}/cloudy-1-day.svg" \
      --column="Locations:TEXT"))
 
 latitude="${request_lat_lon[0]-default}"
-
-[[ "${latitude}" =~ [0-9-] ]]  || { yad --splash --on-top --button='yad-ok:0' --center --text="$(gettext 'No coordinates found, try again')" ; printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; exit 3 ; }
-
+[[ "${latitude}" =~ [0-9-] ]]  || { yad --splash --image="gtk-info" --on-top --button=$(gettext OK)!gtk-ok:0 \
+--center \
+--text="$(gettext 'No coordinates found, try again')" ; \
+printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; exit 3 ; }
 printf -- "latitude=\"%s\"\n" "${latitude}" >> "/root/ywtray/.config/ywtray/ywtray.conf"
+
 
 longitude="${request_lat_lon[1]}"
 printf -- "longitude=\"%s\"\n" "${longitude}" >> "/root/ywtray/.config/ywtray/ywtray.conf"

@@ -2,31 +2,32 @@
 # 
 # i18n nilsonmorales
 # l10n nilsonmorales
-trap 'ywtray_close ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR EXIT TERM KILL
+trap ' ywtray_close ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' INT ERR EXIT TERM KILL
 set -euo pipefail
 #set -x
 export TEXTDOMAIN=ywtray
 export OUTPUT_CHARSET=UTF-8
 source "/root/ywtray/usr/local/bin/ywtray-functions"
 # VARIABLES 
-location=''                   # Town, Country OR State      needed by https://geocode.maps.co
-declare -a weather_data       # array to store data variables requested to open-meteo
-declare -a location_and_units # array to store location and weather preferred units
-declare -a request_lat_lon    # array to store the latitude and longitude pair for the location
-latitude=''                   #                             needed by https://api.open-meteo.com/v1/forecast
-longitude=''                  #                             needed by https://api.open-meteo.com/v1/forecast
+#location=''                   # Town, Country OR State      needed by https://geocode.maps.co
+#declare -a weather_data       # array to store data variables requested to open-meteo
+#declare -a location_and_units # array to store location and weather preferred units
+#declare -a request_lat_lon    # array to store the latitude and longitude pair for the location
+#latitude=''                   #                             needed by https://api.open-meteo.com/v1/forecast
+#longitude=''                  #                             needed by https://api.open-meteo.com/v1/forecast
 current_weather='true'        #                             needed by https://api.open-meteo.com/v1/forecast
-temp_unit=''                  #                             needed by https://api.open-meteo.com/v1/forecast
-windspeed_unit=''             # kmh, ms, mph, kn            needed by https://api.open-meteo.com/v1/forecast
+#temp_unit=''                  #                             needed by https://api.open-meteo.com/v1/forecast
+#windspeed_unit=''             # kmh, ms, mph, kn            needed by https://api.open-meteo.com/v1/forecast
 timeformat='iso8601'          #                             needed by https://api.open-meteo.com/v1/forecast
 timezone="auto"
 #timezone="$(date "+%Z")"      #                             needed by https://api.open-meteo.com/v1/forecast
-wicon=''                      # weather icon indicator name
-wtext=''                      # current weather text description as privided by open-meteo.com
-icons_dir="/root/ywtray/opt/yww-icons"    # weather icons location
+#wicon=''                      # weather icon indicator name
+#wtext=''                      # current weather text description as privided by open-meteo.com
+icons_dir="/root/ywtray/opt/ywtray-icons"    # weather icons location
 #epoch_time                   # used in function weather_icon_descriptor, a local variable declared
-temperature_suffix=''         # suffix F or C to be written in the tooltip
-wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
+#temperature_suffix=''         # suffix F or C to be written in the tooltip
+#wind_speed_suffix=''          # suffix mph, kn to be written in the tooltip
+
 pid_tray=''                   # process id of the yad dialog icon notifier
 
 export icons_dir
@@ -52,11 +53,11 @@ function ywtray_reset () {
      --window-icon="${icons_dir}/cloudy-1-day.svg" \
      --button=$(gettext no)!gtk-no:1 \
      --button=$(gettext yes)!gtk-ok:0
-set -x    
-    reset_answer="${?}"
-    
+
+    reset_answer=$?
+
     if [[ $reset_answer = 0 ]]; then
-        set -x
+
         rm -f "${named_pipe}"
         
         c1=$?
@@ -78,7 +79,7 @@ set -x
         c5=$?
 
         if [[ "${c1}" = "0" && "${c2}" = "0" && "${c3}" = "0" && "${c5}" = "0" ]]; then
-            set -x
+
             reset_result_message="$(gettext "ywtray has been successfully reset, start the program again")"
             reset_result_icon="dialog-information"
         
@@ -90,12 +91,12 @@ set -x
 
       
     yad --splash --image="${reset_result_icon}" --skip-taskbar --no-buttons --timeout="3" --on-top --undecorated --center --text="${reset_result_message}" &
-    set +x    
+   
     fi
    
 
 }
-set +x
+
 export -f ywtray_reset
 
 export named_pipe="$(mktemp -u "/tmp/ywtrayXXXXXXXXXXXXX")"
@@ -105,7 +106,11 @@ exec 6<> "${named_pipe}"
 
 
 source "/root/ywtray/.config/ywtray/ywtray.conf"
-weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
+
+weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}\
+&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=\
+${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}\
+&daily=sunset,sunrise" | weather_data_parser))
 
 
 weather_icon_descriptor
@@ -113,12 +118,16 @@ weather_icon_descriptor
 
 yad --notification \
 --listen \
---text="$(printf ''$(gettext 'Place:')' %s\n%s'$(gettext '\nTemperature:')' %s %s'$(gettext '\nWind')' '$(gettext 'Speed:')' %s %s'$(gettext '\nWind')' '$(gettext 'Direction:')' %s' "${location}" "${wtext}" "${weather_data[0]}" "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]} °")" \
+--text="$(printf -- "$(gettext 'Place: ')%s\n%s\n$(gettext 'Temperature: ')%s \
+%s\n$(gettext 'Wind Speed: ') \
+%s %s\n$(gettext 'Wind Direction: ')%s °"\
+ "${location}" "${wtext}" "${weather_data[0]}"\
+  "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]}")" \
 --image "${icons_dir}/${wicon}" \
---menu="Quit!bash -c ywtray_close!exit|Reset!bash -c ywtray_reset!reload" \
+--menu="$(gettext Quit)!bash -c ywtray_close!exit|$(gettext Reset)!bash -c ywtray_reset!reload" \
 --no-middle \
 --command=":" \
---icon-size 46 <&6 &
+--icon-size 48 <&6 &
 
 pid_tray=$!
 
@@ -127,15 +136,21 @@ pid_tray=$!
 while true ; do
 
 
-    sleep 27m
+    sleep 5s
     
-    weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
+    weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}\
+&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}\
+&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 
     weather_icon_descriptor
     
     echo "icon:${icons_dir}/${wicon}" > "${named_pipe}"
     
-    echo "tooltip:$(gettext Place:) ${location}\n${wtext}\n$(gettext Temperature:) ${weather_data[0]} ${temperature_suffix}\n$(gettext "Wind Speed:") ${weather_data[1]} ${wind_speed_suffix}\n$(gettext "Wind Direction:") ${weather_data[2]} °" >> "${named_pipe}"
+    echo "tooltip:$(gettext Place:) \
+${location}\n${wtext}\n$(gettext Temperature:) \
+${weather_data[0]} \
+${temperature_suffix}\n$(gettext "Wind Speed:") ${weather_data[1]} \
+${wind_speed_suffix}\n$(gettext "Wind Direction:") ${weather_data[2]} °" >> "${named_pipe}"
     
 
 done

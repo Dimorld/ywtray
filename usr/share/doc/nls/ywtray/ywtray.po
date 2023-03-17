@@ -1,5 +1,11 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+
 msgid ""
 msgstr ""
+"#-#-#-#-#  ywtray.po (ywtray-core VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: ywtray-core VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-13 18:28-0600\n"
@@ -26,40 +32,18 @@ msgstr "no"
 
 #: /usr/local/bin/ywtray-core:55
 msgid "yes"
-msgstr "si"
+msgstr "sí"
+
+msgid "Cancel"
+msgstr "Cancelar"
 
 #: /usr/local/bin/ywtray-core:83
 msgid "ywtray has been successfully reset, start the program again"
-msgstr "ywtray ha iniciado exitosamente, inicie el programa de nuevo"
+msgstr "ywtray se ha reajustado exitosamente, inicie el programa de nuevo"
 
 #: /usr/local/bin/ywtray-core:88
 msgid "Something went wrong, start the program again"
-msgstr "Algo salíó mal, inicie el programa de nuevo"
-
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/ywtray-core:139
-#: /usr/local/bin/yww-setup:70 /usr/local/bin/yww-setup:92
-msgid "Place:"
-msgstr "Lugar:"
-
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
-msgid "\\nTemperature:"
-msgstr "\\nTemperatura:"
-
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
-msgid "\\nWind"
-msgstr "\\nViento"
-
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
-msgid "Speed:"
-msgstr "Velocidad:"
-
-#: /usr/local/bin/ywtray-core:117 /usr/local/bin/yww-setup:70
-msgid "Direction:"
-msgstr "Dirección:"
-
-#: /usr/local/bin/ywtray-core:139 /usr/local/bin/yww-setup:92
-msgid "Temperature:"
-msgstr "Temperatura:"
+msgstr "Algo salió mal, inicie el programa de nuevo"
 
 #: /usr/local/bin/ywtray-core:139
 msgid "Wind Speed:"
@@ -107,40 +91,37 @@ msgstr "Llovizna intensa"
 
 #: /usr/local/bin/ywtray-functions:135 /usr/local/bin/ywtray-functions:287
 msgid "Light freezing drizzle"
-msgstr "Llovizna gelida ligera"
+msgstr "Llovizna gélida ligera"
 
 #: /usr/local/bin/ywtray-functions:140 /usr/local/bin/ywtray-functions:292
 msgid "Intense freezing drizzle"
-msgstr "Llovizna gelida intensa"
+msgstr "Llovizna gélida intensa"
 
 #: /usr/local/bin/ywtray-functions:145 /usr/local/bin/ywtray-functions:297
 msgid "Slight rain"
-msgstr "LLuvia ligera"
+msgstr "Lluvia ligera"
 
 #: /usr/local/bin/ywtray-functions:150 /usr/local/bin/ywtray-functions:302
 msgid "Moderate rain"
 msgstr "Lluvia moderada"
 
 #: /usr/local/bin/ywtray-functions:155 /usr/local/bin/ywtray-functions:307
-#, fuzzy
 msgid "Intense rain"
 msgstr "Lluvia intensa"
 
 #: /usr/local/bin/ywtray-functions:160 /usr/local/bin/ywtray-functions:312
 msgid "Light freezing rain"
-msgstr "Lluvia gelida ligera"
+msgstr "Lluvia gélida ligera"
 
 #: /usr/local/bin/ywtray-functions:165 /usr/local/bin/ywtray-functions:317
 msgid "Intense freezing rain"
-msgstr "Lluvia gelida intensa"
+msgstr "Lluvia gélida intensa"
 
 #: /usr/local/bin/ywtray-functions:170 /usr/local/bin/ywtray-functions:322
-#, fuzzy
 msgid "Slight snow fall"
 msgstr "Nevada ligera"
 
 #: /usr/local/bin/ywtray-functions:175 /usr/local/bin/ywtray-functions:327
-#, fuzzy
 msgid "Moderate snow fall"
 msgstr "Nevada moderada"
 
@@ -174,15 +155,15 @@ msgstr "Periodos de nevada intensa"
 
 #: /usr/local/bin/ywtray-functions:215 /usr/local/bin/ywtray-functions:367
 msgid "Thunderstorm"
-msgstr "Tormenta electrica"
+msgstr "Tormenta eléctrica"
 
 #: /usr/local/bin/ywtray-functions:220 /usr/local/bin/ywtray-functions:372
 msgid "Thunderstorm with slight hail"
-msgstr "Tormenta electrica ligera con granizada"
+msgstr "Tormenta eléctrica ligera con granizada"
 
 #: /usr/local/bin/ywtray-functions:225 /usr/local/bin/ywtray-functions:377
 msgid "Thunderstorm with heavy hail"
-msgstr "Tormenta electrica fuerte con granizada"
+msgstr "Tormenta eléctrica fuerte con granizada"
 
 #: /usr/local/bin/ywtray-functions:231
 msgid "unknown"
@@ -201,8 +182,12 @@ msgid "ywtray - settings"
 msgstr "ywtray - ajustes"
 
 #: /usr/local/bin/ywtray-settings:44
-msgid "Type a place, and select your measuring units. Retrieving the latitude and longitude coordinates may take a few seconds"
-msgstr "Escriba un lugar y seleccione sus unidades de medida. La busqueda de la latitud y longitud puede tardar unos segundos"
+msgid ""
+"Type a place, and select your measuring units. Retrieving the latitude and "
+"longitude coordinates may take a few seconds"
+msgstr ""
+"Escriba un lugar y seleccione sus unidades de medida. La búsqueda de la "
+"latitud y longitud puede tardar unos segundos"
 
 #: /usr/local/bin/ywtray-settings:49
 msgid "Location:CE"
@@ -214,15 +199,19 @@ msgstr "Unidad de Temperatura:CB"
 
 #: /usr/local/bin/ywtray-settings:51
 msgid "Wind Speed Unit:CB"
-msgstr "Velocidad del viento:CB"
+msgstr "Unidad de velocidad del viento:CB"
 
 #: /usr/local/bin/ywtray-settings:75
 msgid "ywtray - location selection"
-msgstr "ywtray - Selección de lugar"
+msgstr "ywtray - selección de lugar"
 
 #: /usr/local/bin/ywtray-settings:85
-msgid "Choose the nearest place to your location\\nIf no coordinates are found click Cancel and try a different place"
-msgstr "Elija el lugar mas cercano.\\nSi no se encuentran coordenadas haga clic en Cancelar e intente un lugar distinto"
+msgid ""
+"Choose the nearest place to your location\\nIf no coordinates are found "
+"click Cancel and try a different place"
+msgstr ""
+"Elija el lugar mas cercano.\\nSi no se encuentran coordenadas haga clic en "
+"Cancelar e intente un lugar distinto"
 
 #: /usr/local/bin/ywtray-settings:91
 msgid "No coordinates found, try again"
@@ -233,6 +222,66 @@ msgstr "No se encontraron las coordenadas, intente de nuevo"
 msgid "Start the program again"
 msgstr "Inicie el programa de nuevo"
 
-#: /usr/local/bin/yww-setup:92
-msgid "Wind"
-msgstr "Viento"
+#: ywtray-core:116
+msgid "Place: "
+msgstr "Lugar: "
+
+#: ywtray-core:116
+msgid "Temperature: "
+msgstr "Temperatura: "
+
+#: ywtray-core:116
+msgid "Wind Speed: "
+msgstr "Velocidad del viento: "
+
+#: ywtray-core:116
+msgid "Wind Direction: "
+msgstr "Dirección del viento: "
+
+#: ywtray-core:117
+msgid "Quit"
+msgstr "Quitar"
+
+#: ywtray-core:117
+msgid "Reset"
+msgstr "Reconfigurar"
+
+#: ywtray-functions:395
+msgid "km/h"
+msgstr "km/h"
+
+#: ywtray-functions:399
+msgid "m/s"
+msgstr "m/s"
+
+#: ywtray-functions:403 ywtray-settings:52
+msgid "mph"
+msgstr "mph"
+
+#: ywtray-functions:423
+msgid "°C"
+msgstr "°C"
+
+#: ywtray-functions:427
+msgid "°F"
+msgstr "°F"
+
+#: ywtray-settings:52
+msgid "celsius"
+msgstr "celsius"
+
+#: ywtray-settings:52
+msgid "fahrenheit"
+msgstr "fahrenheit"
+
+#: ywtray-settings:52
+msgid "kmh"
+msgstr "kmh"
+
+#: ywtray-settings:52
+msgid "ms"
+msgstr "ms"
+
+#: ywtray-settings:52
+msgid "kn"
+msgstr "kn"
