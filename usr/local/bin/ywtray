@@ -1,22 +1,33 @@
 #!/usr/bin/env bash
 trap 's=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' ERR
 set -euo pipefail
+#set -x
+# Localization
 export TEXTDOMAIN=ywtray
 export OUTPUT_CHARSET=UTF-8
+
+# Test for the presence of a configuration file, if not present create it, and exit.
+# The user will receive a message telling them to start the program again.
 source "/root/ywtray/.config/ywtray/ywtray.conf" || \
 { mkdir "/root/ywtray/.config/ywtray" ; touch "/root/ywtray/.config/ywtray/ywtray.conf" ; \
     printf -- "first_run=\"true\"\n" > "/root/ywtray/.config/ywtray/ywtray.conf" ; \
     yad --splash --skip-taskbar --image="gtk-info" --on-top --undecorated \
     --button=$(gettext OK)!gtk-ok:0 --center --text="$(gettext 'Start the program again')" ; exit 0 ; }
 
+# When a configuration file is found, a test to the first_run variable is
+# made to see wheter the program has been used before or not.
+
 case "${first_run}"  in
-    
+# if first_run="false" then the script ywtray-core is launched    
     false)
         
         "/root/ywtray/usr/local/bin/ywtray-core"
         ;;
      
-    
+# if first_run="true", first_run value is changed to false (first_run="false"
+# and ywtray-settings is executed, followed by ywtray-core
+# ytray-settings captures your preferences, and ywtray-core uses those pre
+# ferences to run the notification in the tray    
     true)
     
         sed -i "s/true/false/g" "/root/ywtray/.config/ywtray/ywtray.conf"
@@ -26,6 +37,10 @@ case "${first_run}"  in
         "/root/ywtray/usr/local/bin/ywtray-core"
         
         ;;
+
+# if somethig other than true or false is stored in first_run, a 'reboot'
+# is executed by creating or overwriting any content in ytray.conf with first_run="true"
+# and finally a message telling you to start the program again
     
     *)
         if [[ -f "/root/.config/yawtray/ywtray.conf" ]]; then

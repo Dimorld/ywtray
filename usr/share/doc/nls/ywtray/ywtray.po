@@ -285,3 +285,6 @@ msgstr "ms"
 #: ywtray-settings:52
 msgid "kn"
 msgstr "kn"
+
+msgid "Run at Startup"
+msgstr "Ejecutar al inicio"

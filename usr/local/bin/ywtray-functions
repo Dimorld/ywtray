@@ -388,7 +388,7 @@ fi
 }
 
 function set_wind_suffix (){
-set -x
+
          case "${windspeed_unit}" in
          
          kmh)
@@ -416,7 +416,7 @@ set -x
 }
 
 function set_temperature_suffix (){
-set -x
+
         case "${temp_unit}" in
         
         celsius)

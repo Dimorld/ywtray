@@ -314,3 +314,6 @@ msgstr ""
 #: ywtray-settings:52
 msgid "kn"
 msgstr ""
+
+msgid "Run at Startup"
+msgstr ""
