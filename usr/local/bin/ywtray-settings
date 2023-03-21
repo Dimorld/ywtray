@@ -116,11 +116,11 @@ IFS="${oldifs}"
 
 if [[ "${run_at_startup}" = "TRUE" ]]; then
 
-    cp -f "/root/ywtray/usr/share/applications/ywtray.desktop" "/root/Startup/autostart"
+    cp -f "/root/ywtray/usr/share/applications/ywtray.desktop" "/root/.config/autostart"
 
 elif [[ "${run_at_startup}" = "FALSE" ]]; then
     
-    rm -f "/root/Startup/autostart/ywtray.desktop"
+    rm -f "/root/.config/autostart/ywtray.desktop"
 
 fi
 

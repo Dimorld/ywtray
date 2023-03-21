@@ -34,6 +34,7 @@ export icons_dir
 
 function ywtray_close () {
     
+    exec 6>&-
     rm -f "${named_pipe}"	
     kill -USR1 "$YAD_PID"
     kill -9 "$(ps aux | grep "ywtray-core" | awk '$12 ~ /ywtray-core$/ && $11 ~ /bash/{print $2}')"
@@ -57,7 +58,11 @@ function ywtray_reset () {
     reset_answer=$?
 
     if [[ $reset_answer = 0 ]]; then
-
+        
+        exec 6>&-
+        
+        rm -f "/root/.config/autostart/ywtray.desktop"
+        
         rm -f "${named_pipe}"
         
         c1=$?

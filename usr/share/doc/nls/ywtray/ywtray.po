@@ -287,4 +287,4 @@ msgid "kn"
 msgstr "kn"
 
 msgid "Run at Startup"
-msgstr "Ejecutar al inicio"
+msgstr "Ejecutar al inicio de sesión"
