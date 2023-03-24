@@ -126,7 +126,7 @@ fi
 
 # REQUEST lat log of a place to https://geocode.maps.co
 
-request_lat_lon=($(curl -s -k "https://geocode.maps.co/search?q=${location}" | \
+request_lat_lon=($(curl --retry 5 --retry-max 10 -s -k "https://geocode.maps.co/search?q=${location}" | \
     lat_lon_parser - | \
     yad --list \
      --title="$(gettext 'ywtray - location selection')" \

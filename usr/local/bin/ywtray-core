@@ -4,7 +4,7 @@
 # l10n nilsonmorales
 trap ' ywtray_close ; s=$?; echo >&2 "$0: Exit code on line "$LINENO": $BASH_COMMAND" ; exit $s ;' INT ERR EXIT TERM KILL
 set -euo pipefail
-#set -x
+set -x
 export TEXTDOMAIN=ywtray
 export OUTPUT_CHARSET=UTF-8
 source "/root/ywtray/usr/local/bin/ywtray-functions"
@@ -112,7 +112,7 @@ exec 6<> "${named_pipe}"
 
 source "/root/ywtray/.config/ywtray/ywtray.conf"
 
-weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}\
+weather_data=($(curl --retry 20 --retry-max 120 -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}\
 &longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=\
 ${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}\
 &daily=sunset,sunrise" | weather_data_parser))
@@ -143,7 +143,7 @@ while true ; do
 
     sleep 27m
     
-    weather_data=($(curl -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}\
+    weather_data=($(curl --retry 20 --retry-max 120 -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}\
 &longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}\
 &timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
 

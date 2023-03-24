@@ -5,7 +5,29 @@ set -euo pipefail
 # Localization
 export TEXTDOMAIN=ywtray
 export OUTPUT_CHARSET=UTF-8
+# We need a working internet connection before trying anything
+# Turn off trap for the counter to work because only setting off set +euo pipefail
+# does not work
+set +u
+set +e
+set +o pipefail
+trap ERR
+while [[ "$(curl -k -s -I www.google.com | awk 'NR==1{print $2}')" != 200 ]] ; do 
 
+    let "c++" 
+    
+    if [[ "${c}" -gt "10" ]] ; then  
+        
+        yad --splash --skip-taskbar --image="gtk-info" --timeout="4" --on-top --undecorated --no-buttons --center --text="$(gettext 'No working internet connection detected, exiting ywtray')" &
+        
+        exit 4 
+    fi  
+    
+    sleep 2s  ; 
+
+done
+# Restore trap and debuggin
+set -euo pipefail
 # Test for the presence of a configuration file, if not present create it, and exit.
 # The user will receive a message telling them to start the program again.
 source "/root/ywtray/.config/ywtray/ywtray.conf" || \

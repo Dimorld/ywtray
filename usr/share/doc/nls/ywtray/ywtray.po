@@ -288,3 +288,6 @@ msgstr "kn"
 
 msgid "Run at Startup"
 msgstr "Ejecutar al inicio de sesión"
+
+msgid "No working internet connection detected, exiting ywtray"
+msgstr "No se detectó una conexión a internet, saliendo de ywtray"

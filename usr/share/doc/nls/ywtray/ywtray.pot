@@ -317,3 +317,5 @@ msgstr ""
 
 msgid "Run at Startup"
 msgstr ""
+
+msgid "No working internet connection detected, exiting ywtray"
