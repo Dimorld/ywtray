@@ -1,4 +1,4 @@
-YWTRAY     🌦
+    YWTRAY   🌦
 =============
 
 Notificador del clima escrito en yad
