@@ -16,7 +16,7 @@ while [[ "$(curl -k -s -I www.google.com | awk 'NR==1{print $2}')" != 200 ]] ; d
 
     let "c++" 
     
-    if [[ "${c}" -gt "10" ]] ; then  
+    if [[ "${c}" -gt "15" ]] ; then  
         
         yad --splash --skip-taskbar --image="gtk-info" --timeout="4" --on-top --undecorated --no-buttons --center --text="$(gettext 'No working internet connection detected, exiting ywtray')" &
         
