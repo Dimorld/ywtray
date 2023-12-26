@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="56.560001"
+   height="60.200001"
+   viewBox="0 0 14.964833 15.927917"
+   version="1.1"
+   id="svg5"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs2"><filter
+       id="blur"
+       x="-0.19922255"
+       y="-0.17647059"
+       width="1.3741497"
+       height="1.4754902"><feGaussianBlur
+         in="SourceAlpha"
+         stdDeviation="3"
+         id="feGaussianBlur810" /><feOffset
+         dx="0"
+         dy="4"
+         result="offsetblur"
+         id="feOffset812" /><feComponentTransfer
+         id="feComponentTransfer816"><feFuncA
+           slope="0.05"
+           type="linear"
+           id="feFuncA814" /></feComponentTransfer><feMerge
+         id="feMerge822"><feMergeNode
+           id="feMergeNode818" /><feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode820" /></feMerge></filter></defs><g
+     id="layer1"
+     transform="translate(-88.016019,-90.988593)" /></svg>
