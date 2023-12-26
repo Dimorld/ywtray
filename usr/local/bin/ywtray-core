@@ -35,7 +35,7 @@ export icons_dir
 function ywtray_close () {
     
     exec 6>&-
-    rm -f "${named_pipe}"	
+    rm -f "${named_pipe}"
     kill -USR1 "$YAD_PID"
     kill -9 "$(ps aux | grep "ywtray-core" | awk '$12 ~ /ywtray-core$/ && $11 ~ /bash/{print $2}')"
     kill -9 "$(ps aux | grep "ywtray" | awk '$12 ~ /ywtray$/ && $11 ~ /bash/{print $2}')"
@@ -112,24 +112,52 @@ exec 6<> "${named_pipe}"
 
 source "/root/ywtray/.config/ywtray/ywtray.conf"
 
-weather_data=($(curl --retry 20 --retry-max 120 -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}\
-&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=\
-${windspeed_unit}&temperature_unit=${temp_unit}&timezone=${timezone}\
-&daily=sunset,sunrise" | weather_data_parser))
+weather_data=($(curl -s --retry 20 --retry-max 120 -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&temperature_unit=${temp_unit}&wind_speed_unit=${windspeed_unit}&timezone=${timezone}&forecast_days=3" | weather_data_parser))
+
+# Current Weather Icon
+wicon="$(weather_icon_descriptor ${weather_data[4]})"
+# Current Weather Text Description
+wtext="$(weather_text_descriptor ${weather_data[4]})"
 
 
-weather_icon_descriptor
+# Weather Forecast 1d Icon
+wicon1="$(weather_icon_descriptor ${weather_data[7]})"
+# Weather Forecast 1d Text Description
+wtext1="$(weather_text_descriptor ${weather_data[7]})"
 
 
+# Weather Forecast 2d Icon
+wicon2="$(weather_icon_descriptor ${weather_data[8]})"
+# Weather Forecast 2d Text Description
+wtext2="$(weather_text_descriptor ${weather_data[8]})"
+
+
+# Weather Forecast 3d Icon
+wicon3="$(weather_icon_descriptor ${weather_data[9]})"
+# Weather Forecast 3d Text Description
+wtext3="$(weather_text_descriptor ${weather_data[9]})"
+
+set -x
 yad --notification \
 --listen \
 --text="$(printf -- "$(gettext 'Place: ')%s\n%s\n$(gettext 'Temperature: ')%s \
-%s\n$(gettext 'Wind Speed: ') \
+%s\n$(gettext 'Real Feel: ')%s %s\n$(gettext 'Wind Speed: ') \
 %s %s\n$(gettext 'Wind Direction: ')%s °"\
  "${location}" "${wtext}" "${weather_data[0]}"\
-  "${temperature_suffix}" "${weather_data[1]}" "${wind_speed_suffix}" "${weather_data[2]}")" \
+  "${temperature_suffix}" "${weather_data[1]}" "${temperature_suffix}" "${weather_data[2]}" "${wind_speed_suffix}" "${weather_data[3]}")" \
 --image "${icons_dir}/${wicon}" \
---menu="$(gettext Quit)!bash -c ywtray_close!exit|$(gettext Reset)!bash -c ywtray_reset!reload" \
+--menu="$(gettext "TODAY'S FORECAST")|\
+${wtext1}   ${weather_data[10]} ${temperature_suffix} / ${weather_data[13]} ${temperature_suffix}!!${icons_dir}/${wicon1}|\
+$(gettext "Real Feel")   ${weather_data[16]} ${temperature_suffix} / ${weather_data[19]} ${temperature_suffix}!!${icons_dir}/ywtholder.svg|\
+$(gettext "TOMORROW'S FORECAST")|\
+${wtext2}   ${weather_data[11]} ${temperature_suffix} / ${weather_data[14]} ${temperature_suffix}!!${icons_dir}/${wicon2}|\
+$(gettext "Real Feel")   ${weather_data[17]} ${temperature_suffix} / ${weather_data[20]} ${temperature_suffix}!!${icons_dir}/ywtholder.svg|\
+$(gettext "48 HRS FORECAST")|${wtext2}   ${weather_data[12]} ${temperature_suffix} / ${weather_data[15]} ${temperature_suffix}!!${icons_dir}/${wicon3}|\
+$(gettext "Real Feel")   ${weather_data[18]} ${temperature_suffix} / ${weather_data[21]} ${temperature_suffix}!!${icons_dir}/ywtholder.svg|\
+----------------------------|\
+$(gettext "Change location & units")!bash -c ywtray_reset!\
+reload|\
+$(gettext "Quit ywtray")!bash -c ywtray_close!exit" \
 --no-middle \
 --command=":" \
 --icon-size 48 <&6 &
@@ -143,20 +171,53 @@ while true ; do
 
     sleep 27m
     
-    weather_data=($(curl --retry 20 --retry-max 120 -s -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}\
-&longitude=${longitude}&current_weather=${current_weather}&windspeed_unit=${windspeed_unit}&temperature_unit=${temp_unit}\
-&timezone=${timezone}&daily=sunset,sunrise" | weather_data_parser))
+    weather_data=($(curl -s --retry 20 --retry-max 120 -k "https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&temperature_unit=${temp_unit}&wind_speed_unit=${windspeed_unit}&timezone=${timezone}&forecast_days=3" | weather_data_parser))
 
-    weather_icon_descriptor
+    # Current Weather Icon
+wicon="$(weather_icon_descriptor ${weather_data[4]})"
+# Current Weather Text Description
+wtext="$(weather_text_descriptor ${weather_data[4]})"
+
+
+# Weather Forecast 1d Icon
+wicon1="$(weather_icon_descriptor ${weather_data[7]})"
+# Weather Forecast 1d Text Description
+wtext1="$(weather_text_descriptor ${weather_data[7]})"
+
+
+# Weather Forecast 2d Icon
+wicon2="$(weather_icon_descriptor ${weather_data[8]})"
+# Weather Forecast 2d Text Description
+wtext2="$(weather_text_descriptor ${weather_data[8]})"
+
+
+# Weather Forecast 3d Icon
+wicon3="$(weather_icon_descriptor ${weather_data[9]})"
+# Weather Forecast 3d Text Description
+wtext3="$(weather_text_descriptor ${weather_data[9]})"
+
     
     echo "icon:${icons_dir}/${wicon}" > "${named_pipe}"
     
     echo "tooltip:$(gettext Place:) \
 ${location}\n${wtext}\n$(gettext Temperature:) \
-${weather_data[0]} \
-${temperature_suffix}\n$(gettext "Wind Speed:") ${weather_data[1]} \
-${wind_speed_suffix}\n$(gettext "Wind Direction:") ${weather_data[2]} °" >> "${named_pipe}"
-    
+${weather_data[0]} ${temperature_suffix}\n\
+$(gettext 'Real Feel:') ${weather_data[1]} ${temperature_suffix} \
+\n$(gettext "Wind Speed:") ${weather_data[2]} \
+${wind_speed_suffix}\n$(gettext "Wind Direction:") ${weather_data[3]} °" >> "${named_pipe}"
+
+    echo "menu:$(gettext "TODAY'S FORECAST")|\
+${wtext1}   ${weather_data[10]} ${temperature_suffix} / ${weather_data[13]} ${temperature_suffix}!!${icons_dir}/${wicon1}|\
+$(gettext "Real Feel")   ${weather_data[16]} ${temperature_suffix} / ${weather_data[19]} ${temperature_suffix}!!${icons_dir}/ywtholder.svg|\
+$(gettext "TOMORROW'S FORECAST")|\
+${wtext2}   ${weather_data[11]} ${temperature_suffix} / ${weather_data[14]} ${temperature_suffix}!!${icons_dir}/${wicon2}|\
+$(gettext "Real Feel")   ${weather_data[17]} ${temperature_suffix} / ${weather_data[20]} ${temperature_suffix}!!${icons_dir}/ywtholder.svg|\
+$(gettext "48 HRS FORECAST")|${wtext2}   ${weather_data[12]} ${temperature_suffix} / ${weather_data[15]} ${temperature_suffix}!!${icons_dir}/${wicon3}|\
+$(gettext "Real Feel")   ${weather_data[18]} ${temperature_suffix} / ${weather_data[21]} ${temperature_suffix}!!${icons_dir}/ywtholder.svg|\
+----------------------------|\
+$(gettext "Change location & units")!bash -c ywtray_reset!\
+reload|\
+$(gettext "Quit ywtray")!bash -c ywtray_close!exit" >> "${named_pipe}"
 
 done
 
