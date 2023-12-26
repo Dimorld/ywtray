@@ -3,7 +3,7 @@ export TEXTDOMAIN=ywtray
 export OUTPUT_CHARSET=UTF-8
 trap "trap_action" ERR
 set -eou pipefail
-#set -x
+set -x
 source "/root/ywtray/usr/local/bin/ywtray-functions"
 # VARIABLES 
 location=''                   # Town, Country OR State      needed by https://geocode.maps.co
@@ -126,7 +126,7 @@ fi
 
 # REQUEST lat log of a place to https://geocode.maps.co
 
-request_lat_lon=($(curl --retry 5 --retry-max 10 -s -k "https://geocode.maps.co/search?q=${location}" | \
+request_lat_lon=($(curl --retry 5 --retry-max 10 -s -k "https://geocode.maps.co/search?q=${location}&api_key=658a2c8f329d5463951696mvr8919f2" | \
     lat_lon_parser - | \
     yad --list \
      --title="$(gettext 'ywtray - location selection')" \
