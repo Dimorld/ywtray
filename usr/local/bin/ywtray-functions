@@ -36,349 +36,397 @@ function lat_lon_parser (){
 
         }
     
-    '
+        '
 }
 
 # extracts relevant values from the call to the weather api, and presents them into a bash array friedly format.
-function weather_data_parser () {
-    
-    awk '   
-    
+
+function weather_data_parser (){
+
+    awk '
         BEGIN{
 
-            RS="({\")|(,\")"
+                RS="},"
     
-            ORS="\n"
-    
-            FS="(\":)|(\":\\[\")|(\")|(})"
+                ORS="\n"
 
-        }   
-
-        /temperature/{awk_temperature=$2}
-        /windspeed/ {awk_windspeed=$2}
-        /winddirection/{awk_winddirection=$2}
-        /weathercode/{awk_weathercode=$2}
-        /sunset/{awk_sunset=$2}
-        /sunrise/{awk_sunrise=$2}
-        
-        END{
-    
-        printf("%s %s %s %s %s %s", awk_temperature , awk_windspeed, awk_winddirection, awk_weathercode , awk_sunset, awk_sunrise)    
-    
         }
-    
 
-        '
+# Current Data
+#
+        /"current":\{/{
+
+        split($0, c, ",", c_seps)
+    
+# ~     Current Temperature    
+        sub(/.*:/, "", c[3])
+
+# ~     Current Apparent Temperature    
+        sub(/.*:/, "", c[4])
+
+# ~     Current Weather Code    
+        sub(/.*:/, "", c[5])
+
+# ~     Current Wind Speed    
+        sub(/.*:/, "", c[6])
+
+# ~     Current Wind Direction
+        sub(/.*:/, "", c[7])
+
+        }
+
+
+
+# 3 Day Data everything but the weather_code
+    /"daily":\{/{
+
+        patsplit($0, d, "-*[[:digit:]]+\\.[[:digit:]]*")
+
+#   Max Temperatures
+#
+#       Today or day 1        
+#        print d[1]
+#
+#       Tomorrow or day 2
+#        print d[2]
+#
+#       Day After Tomorrow or day 3
+#        print d[3]
+#
+#
+#   Min Temperatures
+#
+#       Today or day 1
+#        print d[4]
+#
+#       Tomorrow or day 2
+#        print d[5]
+#
+#       Day After Tomorrow or day 3
+#        print d[6]
+#
+#
+#   Max Real Feel or Apparent Temperature
+#       
+#       Today or day 1
+#        print d[7]
+#        
+#       Tomorrow or day 2
+#        print d[8]
+#        
+#       Day After Tomorrow or day 3        
+#        print d[9]
+#    
+#   Min Real Feel or Apparent Temperature    
+#        
+#       Today or day 1
+#        print d[10]
+#
+#       Tomorrow or day 2
+#        print d[11]
+#
+#       Day After Tomorrow or day 3        
+#        print d[12]
+
+    }
+
+# 3 Day Data Weather_codes
+
+    /"daily":\{/{
+    
+        split($0, w, "weather_code\":\\[")
+        split(w[2], w2, ",")
+
+#   Day 1
+#        print w2[1]
+
+#   Day 2
+#        print w2[2]
+    
+#   Day 3
+        sub("]","", w2[3])
+#        print w2[3]
+    
+    
+    }
+    
+# ~ Today Sunrise
+
+    /"daily":\{/{
+    
+        split($0, sr,"sunrise\":\\[\"")
+        split(sr[2],sr2,"\"")
+
+    }
+
+# ~ Today Sunset 
+
+    /"daily":\{/{
+
+        split($0, ss,"sunset\":\\[\"")
+        split(ss[2],ss2,"\"")
+    
+    }
+    
+    END{
+        
+        printf("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", c[3], c[4], c[6], c[7], c[5], ss2[1], sr2[1], w2[1], w2[2], w2[3], d[1], d[2], d[3], d[4], d[5], d[6], d[7], d[8], d[9], d[10], d[11], d[12])
+    
+    }
+    
+    '
 }
 
 # translates the weather api's code numbers to text, and determines icons to use 
 function weather_icon_descriptor () {
-
+set -x
     local epoch_time="$(date "+%s")" 
 
-    if [[ "${epoch_time}" -ge "$(date -d "${weather_data[5]}" "+%s")" &&  "${epoch_time}" -le "$(date -d "${weather_data[4]}" +%s)" ]] ; then  
+    if [[ "${epoch_time}" -ge "$(date -d ${weather_data[6]} "+%s")" &&  "${epoch_time}" -le "$(date -d ${weather_data[5]} +%s)" ]] ; then  
 
-
+set -x
     # Daytime icons and short weather descriptions
 
-        case "${weather_data[3]}" in
-
+        case "$1" in
+        
         0)
-            wicon="clear-day.svg"
-            wtext="$(gettext 'Clear sky')"
+            echo "clear-day.svg"
             ;;
 
         1)
-            wicon="clear-day.svg"
-            wtext="$(gettext 'Mainly clear')"
+            echo "clear-day.svg"
             ;;
   
         2)
-            wicon="cloudy-1-day.svg"
-            wtext="$(gettext 'Partly cloudy')"
+            echo "cloudy-1-day.svg"
             ;;
 
         3)
-            wicon="cloudy.svg"
-            wtext="$(gettext 'Overcast')"
+            echo "cloudy.svg"
             ;;
 
         45)
-            wicon="fog.svg"
-            wtext="$(gettext 'Fog')"
+            echo "fog.svg"
             ;;
 
         48)
-            wicon="fog.svg"
-            wtext="$(gettext 'Rime fog')"
+            echo "fog.svg"
             ;;
 
         51)
-            wicon="rainy-1.svg"
-            wtext="$(gettext 'Light drizzle')"
+            echo "rainy-1.svg"
             ;;
   
         53)
-            wicon="rainy-1.svg"
-            wtext="$(gettext 'Moderate drizzle')"
+            echo "rainy-1.svg"
             ;;
 
         55)
-            wicon="rainy-1.svg"
-            wtext="$(gettext 'Intense drizzle')"
+            echo "rainy-1.svg"
             ;;
     
         56)
-            wicon="rain-and-sleet.svg"
-            wtext="$(gettext 'Light freezing drizzle')"
+            echo "rain-and-sleet.svg"
             ;;
 
         57)
-            wicon="rain-and-sleet.svg"
-            wtext="$(gettext 'Intense freezing drizzle')"
+            echo "rain-and-sleet.svg"
             ;;
     
         61)
-            wicon="rainy-1-day.svg"
-            wtext="$(gettext 'Slight rain')"
+            echo "rainy-1-day.svg"
             ;;
     
         63)
-            wicon="rainy-2-day.svg"
-            wtext="$(gettext 'Moderate rain')"
+            echo "rainy-2-day.svg"
             ;;
     
         65)
-            wicon="rainy-3-day.svg"
-            wtext="$(gettext 'Intense rain')"
+            echo "rainy-3-day.svg"
             ;;
     
         66)
-            wicon="rain-and-sleet.svg"
-            wtext="$(gettext 'Light freezing rain')"
+            echo "rain-and-sleet.svg"
             ;;
 
         67)
-            wicon="rain-and-sleet.svg"
-            wtext="$(gettext 'Intense freezing rain')"
+            echo "rain-and-sleet.svg"
             ;;
     
         71)
-            wicon="snowy-1-day.svg"
-            wtext="$(gettext 'Slight snow fall')"
+            echo "snowy-1-day.svg"
             ;;
 
         73)
-            wicon="snowy-2-day.svg"
-            wtext="$(gettext 'Moderate snow fall')"
+            echo "snowy-2-day.svg"
             ;;
     
         75)
-            wicon="snowy-3-day.svg"
-            wtext="$(gettext 'Intense snow fall')"
+            echo "snowy-3-day.svg"
             ;;
 
         77)
-            wicon="snow-and-sleet.svg"
-            wtext="$(gettext 'Snow grains')"
+            echo "snow-and-sleet.svg"
             ;;
 
         80)
-            wicon="rainy-1.svg"
-            wtext="$(gettext 'Slight rain showers')"
+            echo "rainy-1.svg"
             ;;
     
         81)
-            wicon="rainy-2.svg"
-            wtext="$(gettext 'Moderate rain showers')"
+            echo "rainy-2.svg"
             ;;
 
         82)
-            wicon="rainy-3.svg"
-            wtext="$(gettext 'Intense rain showers')"
+            echo "rainy-3.svg"
             ;;
 
         85)
-            wicon="snowy-1.svg"
-            wtext="$(gettext 'Slight snow showers')"
+            echo "snowy-1.svg"
             ;;
 
         86)
-            wicon="snowy-3.svg"
-            wtext="$(gettext 'Heavy snow showers')"
+            echo "snowy-3.svg"
             ;;
 
         95)
-            wicon="scattered-thunderstorms.svg"
-            wtext="$(gettext 'Thunderstorm')"
+            echo "scattered-thunderstorms.svg"
             ;;
     
         96)
-            wicon="thunderstorms.svg"
-            wtext="$(gettext 'Thunderstorm with slight hail')"
+            echo "thunderstorms.svg"
             ;;
 
         99)
-            wicon="thunderstorms.svg"
-            wtext="$(gettext 'Thunderstorm with heavy hail')"
+            echo "thunderstorms.svg"
             ;;
 
 
         *)
-            wicon="default-no.svg"
-            wtext="$(gettext 'unknown')"
+            echo "default-no.svg"
             ;;
     
         esac
 # Night Time Icons    
     else
         
-        case "${weather_data[3]}" in
+        case "$1" in
 
         0)
-            wicon="clear-night.svg"
-            wtext="$(gettext 'Clear sky')"
+            echo "clear-night.svg"
             ;;
 
         1)
-            wicon="clear-night.svg"
-            wtext="$(gettext 'Mainly clear')"
+            echo "clear-night.svg"
             ;;
   
         2)
-            wicon="cloudy-2-night.svg"
-            wtext="$(gettext 'Partly cloudy')"
+            echo "cloudy-2-night.svg"
             ;;
 
         3)
-            wicon="cloudy.svg"
-            wtext="$(gettext 'Overcast')"
+            echo "cloudy.svg"
             ;;
 
         45)
-            wicon="fog.svg"
-            wtext="$(gettext 'Fog')"
+            echo "fog.svg"
             ;;
 
         48)
-            wicon="frost-night.svg"
-            wtext="$(gettext 'Rime fog')"
+            echo "frost-night.svg"
             ;;
 
         51)
-            wicon="rainy-1-night.svg"
-            wtext="$(gettext 'Light drizzle')"
+            echo "rainy-1-night.svg"
             ;;
   
         53)
-            wicon="rainy-1-night.svg"
-            wtext="$(gettext 'Moderate drizzle')"
+            echo "rainy-1-night.svg"
             ;;
 
         55)
-            wicon="rainy-1-night.svg"
-            wtext="$(gettext 'Intense drizzle')"
+            echo "rainy-1-night.svg"
             ;;
     
         56)
-            wicon="rain-and-sleet.svg"
-            wtext="$(gettext 'Light freezing drizzle')"
+            echo "rain-and-sleet.svg"
             ;;
 
         57)
-            wicon="rain-and-sleet.svg"
-            wtext="$(gettext 'Intense freezing drizzle')"
+            echo "rain-and-sleet.svg"
             ;;
     
         61)
-            wicon="rainy-1-night.svg"
-            wtext="$(gettext 'Slight rain')"
+            echo "rainy-1-night.svg"
             ;;
     
         63)
-            wicon="rainy-2-night.svg"
-            wtext="$(gettext 'Moderate rain')"
+            echo "rainy-2-night.svg"
             ;;
     
         65)
-            wicon="rainy-3-night.svg"
-            wtext="$(gettext 'Intense rain')"
+            echo "rainy-3-night.svg"
             ;;
     
         66)
-            wicon="rain-and-sleet.svg"
-            wtext="$(gettext 'Light freezing rain')"
+            echo "rain-and-sleet.svg"
             ;;
 
         67)
-            wicon="rain-and-sleet.svg"
-            wtext="$(gettext 'Intense freezing rain')"
+            echo "rain-and-sleet.svg"
             ;;
     
         71)
-            wicon="snowy-1-night.svg"
-            wtext="$(gettext 'Slight snow fall')"
+            echo "snowy-1-night.svg"
             ;;
 
         73)
-            wicon="snowy-2-night.svg"
-            wtext="$(gettext 'Moderate snow fall')"
+            echo "snowy-2-night.svg"
             ;;
     
         75)
-            wicon="snowy-3-night.svg"
-            wtext="$(gettext 'Intense snow fall')"
+            echo "snowy-3-night.svg"
             ;;
 
         77)
-            wicon="snow-and-sleet.svg"
-            wtext="$(gettext 'Snow grains')"
+            echo "snow-and-sleet.svg"
             ;;
 
         80)
-            wicon="rainy-1-night.svg"
-            wtext="$(gettext 'Slight rain showers')"
+            echo "rainy-1-night.svg"
             ;;
     
         81)
-            wicon="rainy-2-night.svg"
-            wtext="$(gettext 'Moderate rain showers')"
+            echo "rainy-2-night.svg"
             ;;
 
         82)
-            wicon="rainy-3-night.svg"
-            wtext="$(gettext 'Intense rain showers')"
+            echo "rainy-3-night.svg"
             ;;
 
         85)
-            wicon="snowy-1-night.svg"
-            wtext="$(gettext 'Slight snow showers')"
+            echo "snowy-1-night.svg"
             ;;
 
         86)
-            wicon="snowy-3-night.svg"
-            wtext="$(gettext 'Heavy snow showers')"
+            echo "snowy-3-night.svg"
             ;;
 
         95)
-            wicon="scattered-thunderstorms-night.svg"
-            wtext="$(gettext 'Thunderstorm')"
+            echo "scattered-thunderstorms-night.svg"
             ;;
     
         96)
-            wicon="hail.svg"
-            wtext="$(gettext 'Thunderstorm with slight hail')"
+            echo "hail.svg"
             ;;
 
         99)
-            wicon="hail.svg"
-            wtext="$(gettext 'Thunderstorm with heavy hail')"
+            echo "hail.svg"
             ;;
 
 
         *)
-            wicon="default-no.svg"
-            wtext="$(gettext 'unavailable')"
+            echo "default-no.svg"
             ;;
     
         esac       
@@ -386,6 +434,136 @@ function weather_icon_descriptor () {
 fi
 
 }
+export -f weather_icon_descriptor
+
+function weather_text_descriptor () {
+
+    
+    case "$1" in
+
+        0)
+            echo "$(gettext 'Clear sky')"
+            ;;
+
+        1)
+            echo "$(gettext 'Mainly clear')"
+            ;;
+  
+        2)
+            echo "$(gettext 'Partly cloudy')"
+            ;;
+
+        3)
+            echo "$(gettext 'Overcast')"
+            ;;
+
+        45)
+            echo "$(gettext 'Fog')"
+            ;;
+
+        48)
+            echo "$(gettext 'Rime fog')"
+            ;;
+
+        51)
+            echo "$(gettext 'Light drizzle')"
+            ;;
+  
+        53)
+            echo "$(gettext 'Moderate drizzle')"
+            ;;
+
+        55)
+            echo "$(gettext 'Intense drizzle')"
+            ;;
+    
+        56)
+            echo "$(gettext 'Light freezing drizzle')"
+            ;;
+
+        57)
+            echo "$(gettext 'Intense freezing drizzle')"
+            ;;
+    
+        61)
+            echo "$(gettext 'Slight rain')"
+            ;;
+    
+        63)
+            echo "$(gettext 'Moderate rain')"
+            ;;
+    
+        65)
+            echo "$(gettext 'Intense rain')"
+            ;;
+    
+        66)
+            echo "$(gettext 'Light freezing rain')"
+            ;;
+
+        67)
+            echo "$(gettext 'Intense freezing rain')"
+            ;;
+    
+        71)
+            echo "$(gettext 'Slight snowfall')"
+            ;;
+
+        73)
+            echo "$(gettext 'Moderate snowfall')"
+            ;;
+    
+        75)
+            echo "$(gettext 'Intense snowfall')"
+            ;;
+
+        77)
+            echo "$(gettext 'Snow grains')"
+            ;;
+
+        80)
+            echo "$(gettext 'Slight rain showers')"
+            ;;
+    
+        81)
+            echo "$(gettext 'Moderate rain showers')"
+            ;;
+
+        82)
+            echo "$(gettext 'Intense rain showers')"
+            ;;
+
+        85)
+            echo "$(gettext 'Slight snow showers')"
+            ;;
+
+        86)
+            echo "$(gettext 'Heavy snow showers')"
+            ;;
+
+        95)
+            echo "$(gettext 'Thunderstorm')"
+            ;;
+    
+        96)
+            echo "$(gettext 'Thunderstorm with slight hail')"
+            ;;
+
+        99)
+            echo "$(gettext 'Thunderstorm with heavy hail')"
+            ;;
+
+
+        *)
+            echo "$(gettext 'unknown')"
+            ;;
+    
+    esac
+
+    
+}
+export -f weather_text_descriptor
+
 
 function set_wind_suffix (){
 
